@@ -1,0 +1,30 @@
+<?php
+$shippop_status = $block->getStatus();
+$tracking_code = $block->getTrackingCode();
+if (!empty($shippop_status) && !empty($tracking_code)):
+    ?>
+    <div class="block block-order-details-view">
+        <div class="block-title">
+            <strong><?= $block->escapeHtml(__('SHIPPOP')); ?></strong>
+        </div>
+        <div class="block-content">
+            <div class="box box-order-shipping-address">
+                <strong class="box-title"><span><?= $block->escapeHtml(__("Tracking number")); ?></span></strong>
+                <div class="box-content">
+                    <a href="<?= $block->escapeUrl($block->getTrackingLocation() . $tracking_code); ?>" target="_blank">
+                        <?= $block->escapeHtml($tracking_code); ?>
+                    </a>
+                </div>
+            </div>
+
+            <div class="box box-order-shipping-method">
+                <strong class="box-title">
+                    <span><?= $block->escapeHtml(__('Status')); ?></span>
+                </strong>
+                <div class="box-content"><?= $block->escapeHtml(ucfirst($shippop_status)); ?></div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <?php
+endif;

@@ -1,0 +1,11 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <link src="Shippop_Ecommerce::js/choosecourier.js"/>
+    </head>
+    <body>
+        <referenceContainer name="content">
+        	<uiComponent name="shippop_ecommerce_choosecourier_list"/>
+            <block class="Shippop\Ecommerce\Block\ChooseCourier" name="ChooseCourier" template="Shippop_Ecommerce::choosecourier.phtml" />
+        </referenceContainer>
+    </body>
+</page>

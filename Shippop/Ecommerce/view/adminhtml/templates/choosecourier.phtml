@@ -1,0 +1,116 @@
+<style>
+    table.tbl-courier-list {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    table.tbl-courier-list td,table.tbl-courier-list th {
+        border: 1px solid #f9f9f9;
+        text-align: left;
+        padding: 8px;
+    }
+
+    table.tbl-courier-list tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+</style>
+<div id="shippop-popup-modal" style="display:none;">
+    <script id="couriers-template" type="text/x-magento-template">
+        <div style="padding: 15px;height: 500px;overflow-y: auto;">
+            <table class="tbl-courier-list modal-table-style">
+                <tr class="specm-background-list-column">
+                    <th style="width: 20%;text-align: center;"><?= $block->escapeHtml(__('Couriers list')) ?></th>
+                    <th style="width: 20%;text-align: center;"><?= $block->escapeHtml(__('Conditions for pick-up service')) ?></th>
+                    <th style="width: 20%;text-align: center;"><?= $block->escapeHtml(__('Service type')) ?></th>
+                    <th style="width: 20%;text-align: center;"><?= $block->escapeHtml(__('Estimated charge')) ?></th>
+                    <th style="width: 20%;text-align: center;"><?= $block->escapeHtml(__('Choose')) ?></th>
+                </tr>
+                <% _.each(couriers.normal, function(courier, value) { %>
+                    <tr>
+                        <td style="text-align: center;">
+                            <img data-courier-code="<%= courier.courier_code %>" src="<%= courier.logo %>" style="width: 120px;">
+                            <div class="clearfix"></div>
+                            <%= courier.courier_name %>
+                            <div class="clearfix"></div>
+                            <% if (courier.notice) { %>
+                                <span style="font-size: 10px;"><%= courier.notice %></span>
+                            <% } %>
+                        </td>
+                        <td style="text-align: center;">
+                            <% if (courier.remark == "optional") { %>
+                                <p></p>
+                            <% } else { %>
+                                <p style="color: red;"> <%= courier.remark %> </p>
+                            <% } %>
+                        </td>
+                        <td style="text-align: center;">
+                            <%= courier.pick_up_mode %>
+                        </td>
+
+                        <% if (courier.available) { %>
+                            <td style="text-align: center;"><%= courier.price %></td>
+                            <td style="text-align: center;">
+                                <button type="button" data-courier-code="<%= courier.courier_code %>" class="button bd-shippop-main-color button-select-courier" style="width: 100px;height: 40px;background-color: white;border-radius: 10px;"> <?= $block->escapeHtml(__('Select')) ?> </button>
+                            </td>
+                        <% } else { %>
+                            <td style="text-align: center;">-</td>
+                            <td style="text-align: center;">
+                                <button type="button" title="<%= courier.remark %>" class="button txt-shippop-main-color" style="cursor: not-allowed;width: 100px;height: 40px;background-color: white;border-radius: 10px;" disabled> <?= $block->escapeHtml(__('Select')) ?> </button>
+                            </td>
+                        <% } %>
+                    </tr>
+                <% }) %> 
+            </table>
+
+            <table class="tbl-courier-list modal-table-style" style="width:100%;margin-top: 20px;display: none;">
+                <tr class="specm-background-list-column">
+                        <th style="width: 20%;text-align: center;"><?= $block->escapeHtml(__('Couriers list')) ?></th>
+                        <th style="width: 20%;text-align: center;"><?= $block->escapeHtml(__('Conditions for pick-up service')) ?></th>
+                        <th style="width: 20%;text-align: center;"><?= $block->escapeHtml(__('Service type')) ?></th>
+                        <th style="width: 20%;text-align: center;"><?= $block->escapeHtml(__('Estimated charge')) ?></th>
+                        <th style="width: 20%;text-align: center;"><?= $block->escapeHtml(__('Choose')) ?></th>
+                    </tr>
+                    <% _.each(couriers.on_demand, function(courier, value) { %>
+                        <tr>
+                            <td style="text-align: center;">
+                                <img data-courier-code="<%= courier.courier_code %>" src="<%= courier.logo %>" style="width: 120px;">
+                                <div class="clearfix"></div>
+                                <%= courier.courier_name %>
+                                <div class="clearfix"></div>
+                                <% if (courier.notice) { %>
+                                    <span style="font-size: 10px;"><%= courier.notice %></span>
+                                <% } %>
+                            </td>
+                            <td style="text-align: center;">
+                                <% if (courier.remark == "optional") { %>
+                                    <p></p>
+                                <% } else { %>
+                                    <p style="color: red;"> <% courier.remark %> </p>
+                                <% } %>
+                            </td>
+                            <td style="text-align: center;">
+                                <%= courier.pick_up_mode %>
+                            </td>
+
+                            <% if (courier.available) { %>
+                                <td style="text-align: center;"><%= courier.price %></td>
+                                <td style="text-align: center;">
+                                    <button type="button" data-courier-code="<%= courier.courier_code %>" class="button bd-shippop-main-color button-select-courier" style="width: 100px;height: 40px;background-color: white;border-radius: 10px;"> <?= $block->escapeHtml(__('Select')) ?> </button>
+                                </td>
+                            <% } else { %>
+                                <td style="text-align: center;">-</td>
+                                <td style="text-align: center;">
+                                    <button type="button" title="<%= courier.remark %>" class="button txt-shippop-main-color" style="cursor: not-allowed;width: 100px;height: 40px;background-color: white;border-radius: 10px;" disabled> <?= $block->escapeHtml(__('Select')) ?> </button>
+                                </td>
+                            <% } %>
+                        </tr>
+                    <% }) %> 
+                </table>
+
+            <form id="wp-shippop-ecommerce-booking" method="post">
+                <input type="hidden" id="select_courier" name="select_courier" required>
+                <input type="hidden" id="order_ids" name="order_ids" value="<%= order_ids %>">
+            </form>
+        </div>
+    </script>
+</div>

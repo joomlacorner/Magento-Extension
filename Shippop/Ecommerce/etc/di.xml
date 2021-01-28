@@ -1,0 +1,21 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="shippop_sales_order_grid_data_source" xsi:type="string">Magento\Sales\Model\ResourceModel\Order\Grid\Collection</item>
+                <item name="shippop_parcel_sales_order_grid_data_source" xsi:type="string">Magento\Sales\Model\ResourceModel\Order\Grid\Collection</item>
+                <item name="reportcod_grid_data_source" xsi:type="string">Shippop\Ecommerce\Model\ResourceModel\OrderShippop\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <plugin name="choose_courier_filter_table" type="Shippop\Ecommerce\Plugins\ChooseCourierFilterTable" sortOrder="100" disabled="false" />
+    </type>
+    <type name="Magento\Framework\App\Action\AbstractAction">
+        <plugin name="store_session_var" type="Shippop\Ecommerce\Plugins\StoreSessionVar" sortOrder="10"/>
+    </type>
+    <preference for="Shippop\Ecommerce\Api\OrderShippopRepositoryInterface" type="Shippop\Ecommerce\Model\OrderShippopRepository" />
+    <preference for="Shippop\Ecommerce\Api\Data\OrderShippopInterface" type="Shippop\Ecommerce\Model\OrderShippop" />
+
+    <preference for="Shippop\Ecommerce\Api\UpdateStatusInterface" type="Shippop\Ecommerce\Model\UpdateStatus"/>
+</config>

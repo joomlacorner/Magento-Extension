@@ -1,0 +1,134 @@
+"SHIPPOP Parcel information","รายละเอียดพัสดุ SHIPPOP"
+"Access Denied","Access Denied"
+"Booking confirmed and Payment completed","ยืนยันการจองและชำระเงินสำเร็จ"
+"Please print waybill","กรุณาพิมพ์ใบปะหน้า"
+"Thank you for your interest in SHIPPOP service. We already received your information","ขอบคุณที่สนใจใช้บริการ SHIPPOP ทางเราได้รับข้อมูลของคุณแล้ว"
+"Our team will contact you within 1-2 business days","กรุณารอพนักงานติดต่อกลับ ภายใน 1-2 วันทำการ"
+"Information updated","บันทึกข้อมูลเรียบร้อย"
+"Information can't update","ไม่สามารถบันทึกข้อมูลได้"
+Success,สำเร็จ
+Notice,แจ้งเตือน
+Error,พบข้อผิดพลาด
+"Choose courier","เลือกขนส่ง"
+"Parcel list","รายการจัดส่งพัสดุ"
+Order,คำสั่งซื้อ
+"SHIPPIP's tracking number","หมายเลขรายการ"
+"Courier's tracking number","หมายเลขพัสดุจากขนส่ง"
+"Delivery date","วันที่จัดส่ง"
+"Date of delivery completion","วันที่ส่งสำเร็จ"
+Status,สถานะ
+"Receiver name","ชื่อผู้รับ"
+"COD transfer date","วันที่โอนคืน"
+"COD amount","ยอดเก็บเงิน"
+Fee,ค่าธรรมเนียม
+"Transferring amount","ยอดโอนคืน"
+"Billing ID","เลขที่ใบเสร็จ"
+"Transferring status","สถานะโอนคืน"
+"Filter Type","ประเภทการค้นหา"
+Login,เข้าสู่ระบบ
+"COD Report","รายงาน COD"
+Settings,ตั้งค่า
+"Can't connect. Please try again later","ไม่สามารถใช้งานได้ กรุณาลองใหม่อีกครั้ง"
+"Shipping address's incorrect. Please edit shipping address again","ที่อยู่ไม่ถูกต้อง กรุณาตรวจสอบและแก้ไขข้อมูลที่อยู่ใหม่"
+"Can't download waybill. Please try again later","ไม่สามารถดาวโหลดใบปะหน้าได้ กรุณาลองใหม่อีกครั้ง"
+"Incorrect address","ที่อยู่ไม่ถูกต้อง"
+"Deliver to Drop Off point yourself","นำไปส่งที่จุด Drop Off"
+"Pick-up service","เข้ารับที่หน้าบ้าน"
+"You can't create an shipment.","ไม่สามารถสร้างรายการขนส่งได้"
+"Could not save the data: %1","Could not save the data: %1"
+"Requested data doesn't exist","Requested data doesn't exist"
+"Unable to remove data %1","Unable to remove data %1"
+"Print waybill","พิมพ์ใบปะหน้า"
+Pending,รอยืนยัน
+Confirmed,ยืนยันแล้ว
+"During delivery","ระหว่างจัดส่ง"
+Failed/Cancelled,เกิดข้อผิดพลาด/ยกเลิก
+Returned,ถูกตีกลับ
+"Confirmation pending","รอตรวจสอบ"
+"Pending transfer","เตรียมโอนเงินคืน"
+Transfered,โอนเงินคืนแล้ว
+Cancelled,ยกเลิกการโอนคืน
+"Receipt ( Default )","ใบเสร็จ ( Default )"
+Letter,ซองจดหมาย
+"Size 4x6","ขนาด 4x6"
+"Sticker size 8x8 cm","ขนาดสติกเกอร์ 8x8 เซนติเมตร"
+"Sticker size 4x6 in","ขนาดสติกเกอร์ 4x6 นิ้ว"
+View,ดู
+"Cancel order","ยกเลิกรายการ"
+"Are you sure you wan't to cancel this order ?","ยืนยันการยกเลิกรายการ ?"
+shippop_status,สถานะชิปป๊อบ
+"Couriers list","รายชื่อขนส่ง"
+"Conditions for pick-up service","เงื่อนไขการเข้ารับ"
+"Service type","วิธีการเข้ารับพัสดุ"
+"Estimated charge","ค่าส่งโดยประมาณ"
+Choose,ใช้บริการ
+Select,เลือก
+"Login to SHIPPOP","เข้าสู่ระบบ เพื่อใช้งาน"
+Email,อีเมล
+Password,รหัสผ่าน
+"Choose country","เลือกประเทศที่ให้บริการ"
+Thailand,ไทย
+Malaysia,มาเลเซีย
+"Remember me","จำฉันไว้ในระบบ"
+"Do not have account?","ยังไม่มีบัญชีเข้าใช้งาน?"
+"Interested in our services","สนใจใช้บริการ"
+"Interested in our services? Fill this form, and our team will contact you back","สนใจใช้งาน กรอกข้อมูลเพื่อให้ทีมงานติดต่อกลับ"
+"Company name (Optional)","ชื่อบริษัท (ไม่บังคับ)"
+"Name and Surname","ชื่อ นามสกุล"
+"Telephone number","เบอร์โทรศัพท์"
+"Interested courier services","ขนส่งที่สนใจจะเปิดใช้งาน"
+"Submit","ส่งข้อมูล เพื่อให้ทางเราติดต่อกลับหาคุณ"
+Logout,ออกจากระบบ
+"Store's address for pick-up service","ที่อยู่ร้านค้า(ใช้ในการเข้ารับพัสดุ)"
+"Contact number","เบอร์โทรติดต่อ"
+Address,ที่อยู่
+State,ตำบล/แขวง
+District,อำเภอ/เขต
+Province,จังหวัด
+Postcode,รหัสไปรษณีย์
+"Billing and invoice addresses","ที่อยู่ใบแจ้งนี้และใบเสร็จรับเงิน"
+"Tax ID","เลขประจำตัวผู้เสียภาษีอากร"
+Update,อัพเดต
+"Pick up address","ที่อยู่ในการเข้ารับ"
+"Billing address","ที่อยู่ใบเสร็จ"
+"Parcel Dimensions","ขนาดกล่องพัสดุของคำสั่งซื้อ"
+"Weight (kg)","น้ำหนัก (กิโลกรัม)"
+"Width (cm)","ความกว้าง (เซนติเมตร)"
+"Length (cm)","ความยาว (เซนติเมตร)"
+"Height (cm)","ความสูง (เซนติเมตร)"
+"Update Parcel","อัพเดตขนาดกล่อง"
+"Parcel Tracking","ติดตามพัสดุ"
+"Tracking number","หมายเลขพัสดุ"
+"SHIPPOP's tracking number","หมายเลขพัสดุ"
+SHIPPOP,SHIPPOP
+"Choose and checking address","เลือกที่อยู่และตรวจสอบความถูกต้อง"
+"Shipping Status","สถานะการจัดส่ง"
+OK,ตกลง
+"Configuration Menu","ตั้งค่าเมนู"
+"Enable COD Functional","เปิดใช้งาน COD"
+"All Store Views","All Store Views"
+"Purchase Point","Purchase Point"
+"Shipping address","ที่อยู่ในการจัดส่ง"
+"Shipping Method","วิธีการจัดส่ง"
+"Customer Name","ชื่อลูกค้า"
+"Payment Method","วิธีการชำระเงิน"
+"Purchase Date","วันที่ชำระเงิน"
+Total,ยอดรวม
+"Order Status","สถานะคำสั่งซื้อ"
+ID,ID
+"SHIPPOP Status","สถานะ"
+Courier,ขนส่ง
+Actions,Actions
+CSV,CSV
+Datetime,วันเวลา
+"Datetime Shipping","วันที่จัดส่ง"
+"Datetime Complete","วันที่ส่งสำเร็จ"
+"Datetime Transfer","วันที่โอนคืน"
+"COD Amount","ยอดเก็บเงิน"
+"Invoice Id","หมายเลขใบแจ้งหนี้ิ"
+"Receipt Id","หมายเลขใบเสร็จ"
+"COD Status","สถานะ COD"
+Filter,กรอง
+Please fill in your address,กรุณากรอกที่อยู่ของคุณ
+"Confirm","ยืนยัน"
+"Cancel","ยกเลิก"

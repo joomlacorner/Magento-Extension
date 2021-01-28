@@ -1,0 +1,142 @@
+<div id="shippop-popup-modal" style="display:none;">
+    <style>
+        .block-tab-content {
+            border: 1px solid #ccc;
+        }
+
+        .tracking-state {
+            border-top: 1px solid #e3e3e3;
+        }
+
+        .tracking-state {
+            background: #fff;
+            color: #555;
+            min-height: 150px;
+            position: relative;
+            padding: 20px 0;
+            margin-top: 10px;
+        }
+
+        .tracking-state .line {
+            position: absolute;
+            width: 1px;
+            height: 100%;
+            background: #e3e3e3;
+            top: 0;
+            left: 313px;
+        }
+
+        .tracking-state .state {
+            position: relative;
+            padding: 10px;
+            display: block;
+        }
+
+        .tracking-state .state-marker {
+            position: absolute;
+            left: 285px;
+            font-size: 20px;
+            color: #e3e3e3;
+            height: 33px;
+            line-height: 19px;
+            margin: 0 20px;
+        }
+
+        .tracking-state .state-datetime {
+            text-align: right;
+            float: left;
+        }
+
+        .tracking-state .state-description {
+            float: left;
+            margin-left: 60px;
+            margin-top: -2px;
+            width: 45%;
+            text-align: left;
+        }
+
+        .tracking-state .state-datetime .vertical-middle {
+            width: 270px;
+        }
+
+        .tracking-state .state-datetime .vertical-middle .inner .date, 
+        .tracking-state .state-datetime .vertical-middle .inner .time, 
+        .tracking-state .state-datetime .vertical-middle .inner .hr-time {
+            display: inline-block;
+        }
+
+        .clear-float {
+            clear: both;
+        }
+
+        .main-color {
+            color: #0b9dd1;
+        }
+
+        .modal-popup .modal-inner-wrap{ 
+            width: 50%;
+        }
+    </style>
+    <script id="tracking-history-template" type="text/x-magento-template">
+        <div style="padding: 15px;overflow-y: auto;">
+            <div class="block-tab-content">
+                <table class="tbl-shipping-history-list" style="width:100%;padding: 5px;">
+                    <tr>
+                        <td style="width: 50%;">
+                            <img src="<%= TrackingOrder.logo %>" style="display: block;margin: 0 auto;width: 120px;">
+                        </td>
+                        <td style="width: 50%;text-align: left;">
+                            <div style="margin-top: 5px;"> 
+                                <span><?= $block->escapeHtml(__("Order")) ?></span> : #<%= order_id %> </div>
+                            <div style="margin-top: 5px;"> 
+                                <span><?= $block->escapeHtml(__("SHIPPOP's tracking number")) ?></span> : 
+                                <%= TrackingOrder.tracking_code %> 
+                            </div>
+                            <div style="margin-top: 5px;"> 
+                                <span><?= $block->escapeHtml(__("Courier's tracking number")) ?></span> : 
+                                <%= TrackingOrder.courier_tracking_code %> 
+                            </div>
+                            <div style="margin-top: 5px;"> 
+                                <span><?= $block->escapeHtml(__("Status")) ?></span> : 
+                                <%= TrackingOrder.shippop_status %> 
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <div class="tracking-state">
+                    <% if (_.size(TrackingOrder.state) == 0) { %>
+                        <p style="text-align: center;">-</p>
+                    <% } else { %>
+                        <div class="line"></div>
+                    <% } %>
+                    <% _.each(TrackingOrder.state, function(state, value) { %>
+                        <div class="state">
+                            <div class="state-marker">
+                                <i class="fa fa-circle <%= (state === _.last(TrackingOrder.state)) ? 'main-color' : '' %>"></i>
+                            </div>
+                            <div class="state-datetime">
+                                <div class="vertical-middle">
+                                    <div class="inner">
+                                        <div class="date"><%= state.date %></div>
+                                        <div class="hr-time">|</div>
+                                        <div class="time main-color"><%= state.time %></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="space-responsive"></div>
+                            <div class="state-description">
+                                <div class="vertical-middle">
+                                    <div class="inner">
+                                        <div class="line-1 main-color"><%= state.description %></div>
+                                        <div class="line-2"><%= state.location %></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clear-float"></div>
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+    </script>
+</div>

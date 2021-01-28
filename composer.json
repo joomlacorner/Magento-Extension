@@ -3,6 +3,7 @@
   "description": "Official extension from SHIPPOP.",
   "type": "magento2-module",
   "version": "1.1.1",
+  "minimum-stability": "main",
   "require": {
     "php": ">=7.1"
   },

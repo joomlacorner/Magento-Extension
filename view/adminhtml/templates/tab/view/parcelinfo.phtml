@@ -1,0 +1,74 @@
+<?php
+$extra = $block->getExtra();
+$weight = (!empty($extra['weight'])) ? $extra['weight'] : 1;
+$width = (!empty($extra['width'])) ? $extra['width'] : 1;
+$length = (!empty($extra['length'])) ? $extra['length'] : 1;
+$height = (!empty($extra['height'])) ? $extra['height'] : 1;
+
+$shippop_status = $block->getStatus();
+$tracking_code = $block->getTrackingCode();
+?>
+<div class="admin__page-section-content">
+    <div class="admin__page-section-item">
+        <div class="fieldset-wrapper order-information" style="padding: 0px 10px;">
+            <div class="fieldset-wrapper-title">
+                <span class="title"><?= $block->escapeHtml(__('Parcel Dimensions')); ?></span>
+            </div>
+            <form action="<?= $block->getFormAction() ?>" method="post">
+                <input type="hidden" name="form_key" value="<?= $block->escapeHtmlAttr($block->getFormKey()) ?>" />
+                <input type="hidden" name="_order_id" value="<?= $block->escapeHtmlAttr($block->getOrderId()) ?>" />
+                <div class="admin__field">
+                    <label for="_order_total_weight" class="admin__field-label"><?= $block->escapeHtml(__('Weight (kg)')); ?></label>
+                    <div class="admin__field-control">
+                        <input type="number" min="1" step="0.1" class="admin__control-text" id="_order_total_weight" name="_order_total_weight" value="<?= $block->escapeHtmlAttr($weight) ?>" required>
+                    </div>
+                </div>
+                <div class="admin__field">
+                    <label for="_order_width" class="admin__field-label"><?= $block->escapeHtml(__('Width (cm)')); ?></label>
+                    <div class="admin__field-control">
+                        <input type="number" min="1" step="0.1" class="admin__control-text" id="_order_width" name="_order_width" value="<?= $block->escapeHtmlAttr($width) ?>" required>
+                    </div>
+                </div>
+                <div class="admin__field">
+                    <label for="_order_length" class="admin__field-label"><?= $block->escapeHtml(__('Length (cm)')); ?></label>
+                    <div class="admin__field-control">
+                        <input type="number" min="1" step="0.1" class="admin__control-text" id="_order_length" name="_order_length" value="<?= $block->escapeHtmlAttr($length) ?>" required>
+                    </div>
+                </div>
+                <div class="admin__field">
+                    <label for="_order_height" class="admin__field-label"><?= $block->escapeHtml(__('Height (cm)')); ?></label>
+                    <div class="admin__field-control">
+                        <input type="number" min="1" step="0.1" class="admin__control-text" id="_order_height" name="_order_height" value="<?= $block->escapeHtmlAttr($height) ?>" required>
+                    </div>
+                </div>
+                <br />
+                <button type="submit" class="primary" value="submit"><?= $block->escapeHtml(__('Update Parcel')); ?></button>
+            </form>
+        </div>
+    </div>
+    <?php if ($shippop_status && $tracking_code): ?>
+    <div class="admin__page-section-item">
+        <div class="fieldset-wrapper order-information" style="padding: 0px 10px;">
+            <div class="fieldset-wrapper-title">
+                <span class="title"><?= $block->escapeHtml(__('Parcel Tracking')); ?></span>
+            </div>
+            <table class="admin__table-secondary order-account-information-table">
+                <tbody>
+                    <tr>
+                        <th><?= $block->escapeHtml(__('Tracking number')); ?></th>
+                        <td>
+                            <a href="<?= $block->escapeUrl($block->getTrackingLocation() . $tracking_code); ?>" target="_blank">
+                                <?= $block->escapeHtml($tracking_code); ?>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><?= $block->escapeHtml(__('Status')); ?></th>
+                        <td><?= $block->escapeHtml(ucfirst($shippop_status)); ?></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <?php endif; ?>
+</div>

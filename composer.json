@@ -1,0 +1,20 @@
+{
+  "name": "shippop/ecommerce",
+  "description": "Official extension from SHIPPOP.",
+  "type": "magento2-module",
+  "version": "1.1.1",
+  "require": {
+    "php": ">=7.1"
+  },
+  "license": [
+    "GPL-2.0"
+  ],
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Shippop\\Ecommerce\\": ""
+    }
+  }
+}

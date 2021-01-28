@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Shippop_Ecommerce::main_menu" title="SHIPPOP" translate="title" module="Shippop_Ecommerce" sortOrder="40" resource="Shippop_Ecommerce::main_menu"/>
+        <add id="Shippop_Ecommerce::choose_courier" title="Choose courier" translate="title" module="Shippop_Ecommerce" sortOrder="10" action="shippop/ecommerce/choosecourier" resource="Shippop_Ecommerce::choosecourier" parent="Shippop_Ecommerce::main_menu"/>
+        <add id="Shippop_Ecommerce::courier_parcel" title="Parcel list" translate="title" module="Shippop_Ecommerce" sortOrder="10" action="shippop/ecommerce/courierparcel" resource="Shippop_Ecommerce::courierparcel" parent="Shippop_Ecommerce::main_menu"/>
+        <add id="Shippop_Ecommerce::report_cod" title="COD Report" translate="title" module="Shippop_Ecommerce" sortOrder="10" action="shippop/ecommerce/reportcod" resource="Shippop_Ecommerce::reportcod" parent="Shippop_Ecommerce::main_menu" dependsOnConfig="shippop_configuration/auth/is_thailand"/>
+        <!-- <add id="Shippop_Ecommerce::index" title="index" module="Shippop_Ecommerce" sortOrder="10" action="shippop/ecommerce/index" resource="Shippop_Ecommerce::index" parent="Shippop_Ecommerce::main_menu"/> -->
+        <add id="Shippop_Ecommerce::login_register" title="Settings" translate="title" module="Shippop_Ecommerce" sortOrder="10" action="shippop/ecommerce/loginregister" resource="Shippop_Ecommerce::loginregister" parent="Shippop_Ecommerce::main_menu"/>
+    </menu>
+</config>

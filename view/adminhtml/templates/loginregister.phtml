@@ -1,0 +1,106 @@
+<?php
+$logo = $block->shippop_logo_register();
+?>
+<style>
+    div.page-title-wrapper h1.page-title {
+        display: none;
+    }
+</style>
+
+<div class="wrap">
+    <div class="specm-wrapper-login">
+        <h1 class="login-title"><?= $block->escapeHtml(__('Login to SHIPPOP')); ?></h1>
+        <form method="post" class="specm-form-login" action="" style="padding: 0px 50px;">
+            <div class="specm-frm-group">
+                <label><?= $block->escapeHtml(__('Email')); ?></label>
+                <input type="email" name="shippop_email" required>
+            </div>
+            <div class="specm-frm-group">
+                <label><?= $block->escapeHtml(__('Password')); ?></label>
+                <input type="password" name="shippop_password" required>
+            </div>
+            <div class="specm-frm-group">
+                <label><?= $block->escapeHtml(__('Choose country')); ?></label>
+                <select name="shippop_server" required>
+                    <option value="TH"><?= $block->escapeHtml(__('Thailand')); ?></option>
+                    <option value="MY"><?= $block->escapeHtml(__('Malaysia')); ?></option>
+                </select>
+            </div>
+            <div class="specm-frm-group">
+                <label class="specm-checkbox-container"><?= $block->escapeHtml(__('Remember me')); ?>
+                    <input type="checkbox" name="shippop_infinity">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <div class="specm-frm-group">
+                <button type="submit" name="shippop_login_submit">
+                    <?= $block->escapeHtml(__('Login')); ?>
+                </button>
+            </div>
+            <div class="specm-frm-group">
+                <div style="width: 49%;display: inline-block;text-align: right;">
+                    <p style="margin-right: 5px;"><?= $block->escapeHtml(__('Do not have account?')); ?></p>
+                </div>
+                <div style="width: 50%;display: inline-block;text-align: left;">
+                    <button type="button" class="specm-register-btn">
+                        <?= $block->escapeHtml(__('Interested in our services')); ?>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="specm-wrapper-register" style="display: none;">
+        <div style="text-align: center;padding: 15px 10px;">
+            <img src="<?= $block->escapeUrl($logo) ?>" style="width: 80px;">
+        </div>
+        <h1 class="login-title">
+            <?= $block->escapeHtml(__("Interested in our services? Fill this form, and our team will contact you back")); ?>
+        </h1>
+        <span class="specm-register-back">
+            <i class="fa fa-arrow-left" aria-hidden="true"></i>
+        </span>
+        <form method="post" action="" class="specm-form-register" style="padding: 10px 80px;">
+            <div class="specm-frm-group">
+                <label><?= $block->escapeHtml(__('Company name (Optional)')); ?></label>
+                <input type="text" name="shippop_company">
+            </div>
+            <div class="specm-frm-group">
+                <label><?= $block->escapeHtml(__('Name and Surname')); ?></label>
+                <input type="text" name="shippop_name" required />
+            </div>
+            <div class="specm-frm-group">
+                <label><?= $block->escapeHtml(__('Telephone number')); ?></label>
+                <input type="text" name="shippop_tel" pattern="[0-9]{10}" required />
+            </div>
+            <div class="specm-frm-group">
+                <label><?= $block->escapeHtml(__('Email')); ?></label>
+                <input type="email" name="shippop_email" required />
+            </div>
+            <div class="specm-frm-group">
+                <label><?= $block->escapeHtml(__('Interested courier services')); ?></label>
+                <input type="text" name="shippop_courier" placeholder="Flash Express , Kerry Express , Ems" />
+            </div>
+            <div class="specm-frm-group">
+                <label><?= $block->escapeHtml(__('Choose country')); ?></label>
+                <select name="shippop_server" required>
+                    <option value="TH"><?= $block->escapeHtml(__('Thailand')); ?></option>
+                    <option value="MY"><?= $block->escapeHtml(__('Malaysia')); ?></option>
+                </select>
+            </div>
+            <div class="specm-frm-group">
+                <button type="submit" name="shippop_register_submit">
+                    <?= $block->escapeHtml(__('Submit')); ?>
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="specm-wrapper-copyright">
+        <?php
+        printf(
+            "© Copyright 2015-%s All Right Reserved By <a href='%s' target='_blank'>SHIPPOP</a>",
+            date("Y"),
+            "https://www.shippop.com"
+        );
+        ?>
+    </div>
+</div>

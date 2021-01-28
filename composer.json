@@ -14,8 +14,7 @@
       "registration.php"
     ],
     "psr-4": {
-      "Shippop\\Ecommerce\\": "",
-      "files": [ "registration.php" ]
+      "Shippop\\Ecommerce\\": ""
     }
   }
 }

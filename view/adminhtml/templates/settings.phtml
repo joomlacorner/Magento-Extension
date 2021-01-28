@@ -91,10 +91,8 @@ if (!empty($member) && $member["status"]) {
                         <?= $block->escapeHtml(__("Address")); ?><span class="red-star-setting">*</span>
                     </th>
                     <td>
-                        <textarea class="specm-settings-input" name="specm_settings[address][address]" 
-                        id="address_address" cols="20" rows="5" 
-                        placeholder="<?= $block->escapeHtml(__("Please fill in your address")); ?>" required>
-                        <?= $block->escapeHtmlAttr($pickup_address) ?></textarea>
+                        <textarea class="specm-settings-input" name="specm_settings[address][address]" id="address_address" cols="20" rows="5" 
+                        placeholder="<?= $block->escapeHtml(__("Please fill in your address")); ?>" required><?= $block->escapeHtmlAttr($pickup_address) ?></textarea>
                     </td>
                 </tr>
                 <?php if ($server == "MY"): ?>
@@ -180,10 +178,8 @@ if (!empty($member) && $member["status"]) {
                 <tr>
                     <th scope="row"><?= $block->escapeHtml(__("Address")); ?></th>
                     <td>
-                        <textarea name="specm_settings[billing][address]" class="specm-settings-input" 
-                        id="billing_address" cols="20" style="resize: none;" rows="5"
-                        placeholder="<?= $block->escapeHtml(__("Please fill in your address")); ?>">
-                        <?= $block->escapeHtmlAttr($billing_address) ?></textarea>
+                        <textarea name="specm_settings[billing][address]" class="specm-settings-input" id="billing_address" cols="20" style="resize: none;" 
+                        rows="5" placeholder="<?= $block->escapeHtml(__("Please fill in your address")); ?>"><?= $block->escapeHtmlAttr($billing_address) ?></textarea>
                     </td>
                 </tr>
             </tbody>

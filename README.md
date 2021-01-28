@@ -1,2 +1,2 @@
 # Magento-Extension
-Ja
+Official Extension Magento 2 Ecommerce

@@ -73,7 +73,8 @@ if (!empty($member) && $member["status"]) {
                     <td>
                         <input type="text" class="specm-settings-input" 
                             id="address_name" name="specm_settings[address][name]" 
-                            value="<?= $block->escapeHtmlAttr($pickup_name) ?>" required>
+                            value="<?= $block->escapeHtmlAttr($pickup_name) ?>" required
+                            placeholder="<?= $block->escapeHtml(__("Name and Surname")); ?>">
                         </td>
                 </tr>
                 <tr>
@@ -83,7 +84,8 @@ if (!empty($member) && $member["status"]) {
                     <td>
                         <input type="text" class="specm-settings-input" id="address_tel" 
                         name="specm_settings[address][tel]" pattern="[0-9]{10}" 
-                        value="<?= $block->escapeHtmlAttr($pickup_tel) ?>" required>
+                        value="<?= $block->escapeHtmlAttr($pickup_tel) ?>" required
+                        placeholder="<?= $block->escapeHtml(__("Contact number")); ?>">
                     </td>
                 </tr>
                 <tr>
@@ -104,7 +106,8 @@ if (!empty($member) && $member["status"]) {
                         <td>
                             <input type="text" class="specm-settings-input" id="address_state" 
                             name="specm_settings[address][state]" 
-                            value="<?= $block->escapeHtmlAttr($pickup_state) ?>" required>
+                            value="<?= $block->escapeHtmlAttr($pickup_state) ?>" required
+                            placeholder="<?= $block->escapeHtml(__("State")); ?>">
                         </td>
                     </tr>
                     <tr>
@@ -115,7 +118,8 @@ if (!empty($member) && $member["status"]) {
                         <td>
                             <input type="text" class="specm-settings-input" id="address_district" 
                             name="specm_settings[address][district]" 
-                            value="<?= $block->escapeHtmlAttr($pickup_district) ?>" required>
+                            value="<?= $block->escapeHtmlAttr($pickup_district) ?>" required
+                            placeholder="<?= $block->escapeHtml(__("District")); ?>">
                         </td>
                     </tr>
                     <tr>
@@ -126,7 +130,8 @@ if (!empty($member) && $member["status"]) {
                         <td>
                             <input type="text" class="specm-settings-input" id="address_province" 
                             name="specm_settings[address][province]" 
-                            value="<?= $block->escapeHtmlAttr($pickup_province) ?>" required>
+                            value="<?= $block->escapeHtmlAttr($pickup_province) ?>" required
+                            placeholder="<?= $block->escapeHtml(__("Province")); ?>">
                         </td>
                     </tr>
                     <tr>
@@ -137,7 +142,8 @@ if (!empty($member) && $member["status"]) {
                         <td>
                             <input type="number" class="specm-settings-input" id="address_postcode" 
                             name="specm_settings[address][postcode]" min="1" step="1" 
-                            value="<?= $block->escapeHtmlAttr($pickup_postcode) ?>" required>
+                            value="<?= $block->escapeHtmlAttr($pickup_postcode) ?>" required
+                            placeholder="<?= $block->escapeHtml(__("Postcode")); ?>">
                         </td>
                     </tr>
                 <?php endif; ?>
@@ -156,7 +162,8 @@ if (!empty($member) && $member["status"]) {
 
                         <input type="text" class="specm-settings-input" 
                         id="billing_name" name="specm_settings[billing][name]" 
-                        value="<?= $block->escapeHtmlAttr($billing_name) ?>">
+                        value="<?= $block->escapeHtmlAttr($billing_name) ?>"
+                        placeholder="<?= $block->escapeHtml(__("Name and Surname")); ?>">
                     </td>
                 </tr>
                 <tr>
@@ -164,7 +171,8 @@ if (!empty($member) && $member["status"]) {
                     <td>
                         <input type="text" class="specm-settings-input" 
                         id="billing_tax_id" name="specm_settings[billing][tax_id]" 
-                        value="<?= $block->escapeHtmlAttr($billing_tax_id) ?>">
+                        value="<?= $block->escapeHtmlAttr($billing_tax_id) ?>"
+                        placeholder="<?= $block->escapeHtml(__("Tax ID")); ?>">
                     </td>
                 </tr>
                 <tr>
@@ -172,7 +180,8 @@ if (!empty($member) && $member["status"]) {
                     <td>
                         <input type="text" class="specm-settings-input" 
                         id="billing_tel" name="specm_settings[billing][tel]" 
-                        pattern="[0-9]{10}" value="<?= $block->escapeHtmlAttr($billing_tel) ?>">
+                        pattern="[0-9]{10}" value="<?= $block->escapeHtmlAttr($billing_tel) ?>"
+                        placeholder="<?= $block->escapeHtml(__("Contact number")); ?>">
                     </td>
                 </tr>
                 <tr>

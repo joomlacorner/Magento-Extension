@@ -32,7 +32,6 @@ class CourierTrackingCode extends Column
         $this->urlBuilder = $urlBuilder;
         parent::__construct($context, $uiComponentFactory, $components, $data);
     }
-
     /**
      * @param array $dataSource
      * @return array
@@ -43,12 +42,12 @@ class CourierTrackingCode extends Column
             foreach ($dataSource['data']['items'] as & $item) {
                 if (isset($item['courier_tracking_code'])) {
                     $link = '';
-                    $link .= '<a href="javascript:void(0)" data-order-id="' . $item['increment_id'] . ' ';
-                    $link .= 'data-tracking-code="'. $item['_tracking_code'] .'" class="shippop-tracking-history">';
+                    $link .= '<a href="javascript:void(0)" data-order-id="' . $item['increment_id'] . '" ';
+                    $link .= 'data-tracking-code="'. $item['_tracking_code'] .'" class="shippop-tracking-history" >';
                     $link .= $item['courier_tracking_code'] . '</a>';
 
-                    $item['courier_tracking_code'] = $link;
                     $item['_courier_tracking_code'] = $item['courier_tracking_code'];
+                    $item['courier_tracking_code'] = $link;
                 }
             }
         }

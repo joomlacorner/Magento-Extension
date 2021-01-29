@@ -235,6 +235,7 @@ class Utility extends AbstractHelper
                 $custom_path = 'shippop/preprintlabel/';
                 $full_path = $mediaPath . $custom_path;
 
+                $file_removes = [];
                 if (!file_exists($full_path)) {
                     $this->_io->mkdir($full_path, 0775);
                 } else {

@@ -43,12 +43,12 @@ class TrackingCode extends Column
             foreach ($dataSource['data']['items'] as & $item) {
                 if (isset($item['tracking_code'])) {
                     $link = '';
-                    $link .= '<a href="javascript:void(0)" data-order-id="' . $item['increment_id'] . ' ';
+                    $link .= '<a href="javascript:void(0)" data-order-id="' . $item['increment_id'] . '" ';
                     $link .= 'data-tracking-code="'. $item['tracking_code'] .'" class="shippop-tracking-history">';
                     $link .= $item['tracking_code'] . '</a>';
 
-                    $item['tracking_code'] = $link;
                     $item['_tracking_code'] = $item['tracking_code'];
+                    $item['tracking_code'] = $link;
                 }
             }
         }

@@ -33,15 +33,11 @@
                             <%= courier.courier_name %>
                             <div class="clearfix"></div>
                             <% if (courier.notice) { %>
-                                <span style="font-size: 10px;"><%= courier.notice %></span>
+                                <span style="font-size: 10px;color: red;"><%= courier.notice %></span>
                             <% } %>
                         </td>
                         <td style="text-align: center;">
-                            <% if (courier.remark == "optional") { %>
-                                <p></p>
-                            <% } else { %>
-                                <p style="color: red;"> <%= courier.remark %> </p>
-                            <% } %>
+                            <p style="color: red;"> <%= courier.remark %> </p>
                         </td>
                         <td style="text-align: center;">
                             <%= courier.pick_up_mode %>
@@ -78,7 +74,7 @@
                                 <%= courier.courier_name %>
                                 <div class="clearfix"></div>
                                 <% if (courier.notice) { %>
-                                    <span style="font-size: 10px;"><%= courier.notice %></span>
+                                    <span style="font-size: 10px;color: red;"><%= courier.notice %></span>
                                 <% } %>
                             </td>
                             <td style="text-align: center;">

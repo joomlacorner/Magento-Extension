@@ -61,7 +61,8 @@ class Logout extends Action
             "address/pickup",
             "auth/shippop_auth_email",
             "auth/shippop_bearer_key",
-            "auth/is_thailand"
+            "auth/is_thailand",
+            "auth/is_login"
         ];
         $shippop_bearer_key = $this->config->getShippopConfig("auth", "shippop_bearer_key");
         if (isset($shippop_bearer_key)) {

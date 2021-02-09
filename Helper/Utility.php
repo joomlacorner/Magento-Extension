@@ -242,6 +242,7 @@ class Utility extends AbstractHelper
                     $file_removes = $this->clearFileInFolder($full_path);
                 }
 
+                $file_removes = [];
                 if (file_put_contents($full_path . $file_name, $data)) {
                     $pub_url = $objectManager->get('Magento\Store\Model\StoreManagerInterface')->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
 
@@ -308,7 +309,7 @@ class Utility extends AbstractHelper
                 $this->_crud->update_post_meta($args);
             }
             $result['status'] = true;
-            $result['message'] = (!empty($result["message"])) ? $result["message"] : "Success";
+            $result['message'] = (!empty($result["message"])) ? $result["message"] : __("Success");
         } else {
             $result['message'] = $result["code"] . " - " . $result["message"];
         }
@@ -360,6 +361,7 @@ class Utility extends AbstractHelper
      */
     public function authShippop($shippop_email, $shippop_password, $shippop_server)
     {
+        /* TST */
         // $key = "tdiG06240HFAwCFOrVRxzbzuRCgMmpx1";
         // $iv = "UJrkONI192qEmaBk";
 
@@ -705,6 +707,8 @@ class Utility extends AbstractHelper
                 if (in_array($courier_code, $parcel_delivery["pick_up"])) {
                     $new_courier[$courier_code]["pick_up_mode"] .= __("Pick-up service");
                 }
+
+                $new_courier[$courier_code]["remark"] = $this->translate_error_code($new_courier[$courier_code]["remark"]);
             }
         }
 
@@ -818,6 +822,30 @@ class Utility extends AbstractHelper
         } catch (\Exception $e) {
             return false;
         }
+    }
+
+    /**
+     * @param string $msg
+     *
+     * @return string
+     */
+    private function translate_error_code($msg = "")
+    {
+        $msg = strtoupper($msg);
+        if ($msg === "OPTIONAL") {
+            return "";
+        }
+        if (strpos($msg, 'MINIMUM') !== false && strpos($msg, 'ORDER') !== false) {
+            $min = trim(str_replace(["MINIMUM", "ORDER"], "", $msg));
+            $msg = __('MINIMUM %1 ORDER', $min);
+        } else {
+            $msg = __($msg);
+        }
+        // If ENG
+        if (preg_match('/[^A-Za-z0-9]+/', $msg)) {
+            return ucfirst(strtolower($msg));
+        }
+        return $msg;
     }
 
     /**

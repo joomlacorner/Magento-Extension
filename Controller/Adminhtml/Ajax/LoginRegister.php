@@ -53,7 +53,10 @@ class LoginRegister extends \Magento\Backend\App\Action
                 if ($response["status"]) {
                     $this->_utility->setShippopConfig("auth", "shippop_bearer_key", $response["data"]["token"]);
                     $this->_utility->setShippopConfig("auth", "shippop_auth_email", $shippop_email);
+                    $this->_utility->setShippopConfig("auth", "is_login", "1");
                     $response['redirect_url'] = $this->urlBuilder->getUrl("shippop/ecommerce/settings");
+                } else {
+                    $response['message'] = __("Can’t connect. Please try again later") . " [ " . __($response['message']) . " ] ";
                 }
             } else {
                 $response = [

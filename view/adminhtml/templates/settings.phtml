@@ -31,14 +31,12 @@ if (!empty($member) && $member["status"]) {
 ?>
 
 <div class="wrap">
-    <a href="<?= $block->escapeUrl($logout) ?>">
-        <button style="color: red;border: solid 1px red;position: absolute;right: 20px;background: white;" 
-            type="button" class="button button-danger specm-logout-btn">
-            <?= $block->escapeHtml(__('Logout')); ?>
-        </button>
-    </a>
+    <button data-link="<?= $block->escapeUrl($logout) ?>"
+        type="button" class="button button-danger specm-logout-btn">
+        <?= $block->escapeHtml(__('Logout')); ?>
+    </button>
     <form method="post" name="settings" action="#">
-        <h2 style="margin-top: 10px;"><?= $block->escapeHtml(__('Settings')); ?></h2>
+        <h2 style="margin-top: 20px;font-weight: 600;"><?= $block->escapeHtml(__('Settings')); ?></h2>
         <hr>
         <table class="form-table" role="presentation">
             <tbody>
@@ -47,7 +45,7 @@ if (!empty($member) && $member["status"]) {
                     <td>
                         <input type="email" class="specm-settings-input" 
                             value="<?= $block->escapeHtmlAttr($email) ?>" 
-                            readonly="" style="opacity: 0.5;">
+                            readonly="" style="opacity: 0.9;">
                         </td>
                 </tr>
                 <tr>
@@ -55,12 +53,12 @@ if (!empty($member) && $member["status"]) {
                     <td>
                         <input type="text" class="specm-settings-input" 
                         value="<?= $block->escapeHtmlAttr($country) ?>" 
-                        readonly="" style="opacity: 0.5;">
+                        readonly="" style="opacity: 0.9;">
                     </td>
                 </tr>
             </tbody>
         </table>
-        <h2 style="margin-top: 10px;">
+        <h2 style="margin-top: 20px;font-weight: 600;">
             <?= $block->escapeHtml(__("Store's address for pick-up service")); ?>
         </h2>
         <hr>
@@ -93,6 +91,7 @@ if (!empty($member) && $member["status"]) {
                         <?= $block->escapeHtml(__("Address")); ?><span class="red-star-setting">*</span>
                     </th>
                     <td>
+                        <p style='color: red;'></p>
                         <textarea class="specm-settings-input" name="specm_settings[address][address]" id="address_address" cols="20" rows="5" 
                         placeholder="<?= $block->escapeHtml(__("Please fill in your address")); ?>" required><?= $block->escapeHtmlAttr($pickup_address) ?></textarea>
                     </td>
@@ -147,9 +146,16 @@ if (!empty($member) && $member["status"]) {
                         </td>
                     </tr>
                 <?php endif; ?>
+                    <tr>
+                        <th scope="row">
+                        </th>
+                        <td>
+                            <input type="checkbox" id="address_billing_clone" value="clone"><label for="address_billing_clone"> <?= $block->escapeHtml(__("Copy store's address intro billing address")); ?></label>
+                        </td>
+                    </tr>
             </tbody>
         </table>
-        <h2 style="margin-top: 10px;"><?= $block->escapeHtml(__("Billing and invoice addresses")); ?></h2>
+        <h2 style="margin-top: 20px;font-weight: 600;"><?= $block->escapeHtml(__("Billing and invoice addresses")); ?></h2>
         <hr>
         <table class="form-table" role="presentation">
             <tbody>
@@ -187,54 +193,61 @@ if (!empty($member) && $member["status"]) {
                 <tr>
                     <th scope="row"><?= $block->escapeHtml(__("Address")); ?></th>
                     <td>
+                        <p style='color: red;'></p>
                         <textarea name="specm_settings[billing][address]" class="specm-settings-input" id="billing_address" cols="20" style="resize: none;" 
                         rows="5" placeholder="<?= $block->escapeHtml(__("Please fill in your address")); ?>"><?= $block->escapeHtmlAttr($billing_address) ?></textarea>
                     </td>
                 </tr>
+                <tr>
+                    <th scope="row"></th>
+                    <td>
+                        <button type="submit" class="button button-primary primary">
+                            <?= $block->escapeHtml(__("Update")); ?>
+                        </button>
+                    </td>
+                </tr>
             </tbody>
         </table> 
-        <button type="submit" class="button button-primary primary">
-            <?= $block->escapeHtml(__("Update")); ?>
-        </button>
     </form>
 </div>
 
 <div id="shippop-popup-modal" style="display: none;">
     <script id="address-corrector-template" type="text/x-magento-template">
-        <div style="padding: 15px;height: 500px;overflow-y: auto;">
-            <div id="address-corrector-form" style="padding: 15px;text-align: left;">
-                <h2><?= $block->escapeHtml(__('Pick up address')) ?></h2>
+        <div style="overflow-y: auto;">
+            <div id="address-corrector-form">
                 <% _.each(address_address_suggestion, function(data_object, value) { %>
                     <% if (value == 0) { %>
-                            <p> <input checked type="radio" name="correct_address" value="<%= value %>" 
+                            <p style='margin-bottom: 10px;'> <input checked type="radio" name="correct_address" value="<%= value %>" 
                                     data-full="<%= data_object.full %>" data-state="<%= data_object.state %>" 
                                     data-district="<%= data_object.district %>" data-province="<%= data_object.province %>" 
                                     data-postcode="<%= data_object.postcode %>" /> <%= data_object.full %> </p>
                         <% } else { %>
-                            <p> <input type="radio" name="correct_address" value="<%= value %>" 
+                            <p style='margin-bottom: 10px;'> <input type="radio" name="correct_address" value="<%= value %>" 
                                     data-full="<%= data_object.full %>" data-state="<%= data_object.state %>" 
                                     data-district="<%= data_object.district %>" data-province="<%= data_object.province %>" 
                                     data-postcode="<%= data_object.postcode %>" /> <%= data_object.full %> </p>
                         <% } %>
                 <% }) %>
 
-                <hr style="margin-top: 20px;margin-bottom: 20px;" />
+                <% if (_.size(billing_address_suggestion) > 0) { %>
+                
+                    <hr style="margin-top: 20px;margin-bottom: 20px;" />
 
-                <h2><?= $block->escapeHtml(__('Billing address')) ?></h2>
-                <% _.each(billing_address_suggestion, function(data_object, value) { %>
-                    <% if (value == 0) { %>
-                            <p> <input checked type="radio" name="correct_address_billing" value="<%= value %>" 
-                                    data-full="<%= data_object.full %>" data-state="<%= data_object.state %>" 
-                                    data-district="<%= data_object.district %>" data-province="<%= data_object.province %>" 
-                                    data-postcode="<%= data_object.postcode %>" /> <%= data_object.full %> </p>
-                        <% } else { %>
-                            <p> <input type="radio" name="correct_address_billing" value="<%= value %>" 
-                                    data-full="<%= data_object.full %>" data-state="<%= data_object.state %>" 
-                                    data-district="<%= data_object.district %>" data-province="<%= data_object.province %>" 
-                                    data-postcode="<%= data_object.postcode %>" /> <%= data_object.full %> </p>
-                        <% } %>
-                <% }) %>
-
+                    <h1 class="specm-second-title"><?= $block->escapeHtml(__('Please choose correct billing address for billing service')) ?></h1>
+                    <% _.each(billing_address_suggestion, function(data_object, value) { %>
+                        <% if (value == 0) { %>
+                                <p style='margin-bottom: 10px;'> <input checked type="radio" name="correct_address_billing" value="<%= value %>" 
+                                        data-full="<%= data_object.full %>" data-state="<%= data_object.state %>" 
+                                        data-district="<%= data_object.district %>" data-province="<%= data_object.province %>" 
+                                        data-postcode="<%= data_object.postcode %>" /> <%= data_object.full %> </p>
+                            <% } else { %>
+                                <p style='margin-bottom: 10px;'> <input type="radio" name="correct_address_billing" value="<%= value %>" 
+                                        data-full="<%= data_object.full %>" data-state="<%= data_object.state %>" 
+                                        data-district="<%= data_object.district %>" data-province="<%= data_object.province %>" 
+                                        data-postcode="<%= data_object.postcode %>" /> <%= data_object.full %> </p>
+                            <% } %>
+                    <% }) %>
+                <% } %>
             </div>
             <div class="clearfix"></div>
         </div>

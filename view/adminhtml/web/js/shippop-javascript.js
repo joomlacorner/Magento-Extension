@@ -10,12 +10,21 @@ require([
     check_menu_available();
   });
 
+  $( "body" ).on(
+		"click",
+		"#menu-shippop-ecommerce-main-menu",
+		function(e) {
+      check_menu_available();
+		}
+	);
+
+
   var existCondition = setInterval(function () {
     var vs = jQuery("#menu-shippop-ecommerce-main-menu").find("ul > li:hidden")
       .length;
     // console.log(vs);
     if (vs <= 1) {
-      console.log("Exists!");
+      // console.log("Exists!");
       clearInterval(existCondition);
       check_menu_available();
     }
@@ -32,7 +41,6 @@ require([
         method: "POST",
         data: data,
         dataType: "json",
-        showLoader: true,
         beforeSend: function (xhr) {
         },
       })

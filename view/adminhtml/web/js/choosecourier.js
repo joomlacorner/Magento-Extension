@@ -78,7 +78,7 @@ require([
           Specm_utility.showAlert( "Error", errorThrown, "F", false, "close");
         });
     } else {
-      Specm_utility.showAlert( "Alert", "Please select order first", "F", false, "close");
+      Specm_utility.showAlert( "Alert", $t("Please select order first"), "F", false, "close");
     }
   });
 

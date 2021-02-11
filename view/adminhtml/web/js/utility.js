@@ -37,6 +37,7 @@ define([
       } else {
         var icon = "";
       }
+      message = '<p style="text-align: center;">' + message + '</p>';
       var msg = icon + " " + message;
 
       var alertBtn = [];

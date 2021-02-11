@@ -4,7 +4,8 @@ form[name='settings'] > table > tbody > tr > th {
 
 form[name='settings'] > table > tbody > tr > td > input[type='text'],
 form[name='settings'] > table > tbody > tr > td > input[type='email'],
-form[name='settings'] > table > tbody > tr > td > input[type='phone']  {
+form[name='settings'] > table > tbody > tr > td > input[type='phone'],
+form[name='settings'] > table > tbody > tr > td > input[type='number']  {
     font-size: 16px;
     height: 38px;
     width: 32em;

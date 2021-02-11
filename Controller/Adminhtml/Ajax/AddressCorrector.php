@@ -43,6 +43,7 @@ class AddressCorrector extends \Magento\Backend\App\Action
                 'status' => true,
                 'suggestion' => [
                     [
+                        "full" => $address_address,
                         "state" => "",
                         "district" => "",
                         "province" => "",
@@ -53,7 +54,16 @@ class AddressCorrector extends \Magento\Backend\App\Action
 
             $billing_address_suggestion = [
                 'type' => 1,
-                'status' => true
+                'status' => true,
+                'suggestion' => [
+                    [
+                        "full" => $billing_address,
+                        "state" => "",
+                        "district" => "",
+                        "province" => "",
+                        "postcode" => "",
+                    ]
+                ]
             ];
 
             if (!empty($shippop_bearer_key) && $shippop_server === "TH") {

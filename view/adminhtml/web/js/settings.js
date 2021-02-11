@@ -31,39 +31,30 @@ require([
       .done(function (resp) {
         Specm_utility.hidePreload();
         if (resp.status) {
-          // if (
-          //   resp.address_address_suggestion.status === false ||
-          //   resp.billing_address_suggestion.status === false
-          // ) {
-          //   Specm_utility.showAlert(
-          //     "Error",
-          //     resp.address_address_suggestion.message,
-          //     "F",
-          //     false,
-          //     "close"
-          //   );
-          //   return false;
-          // }
-
+          var check_address_first = check_address_second = false;
           if (resp.address_address_suggestion.status === false) {
-            $(frm_elm).find("textarea#address_address").css("border", "solid 2px red");
-            $(frm_elm).find("textarea#address_address").closest("td").find("p").text(resp.address_address_suggestion.message);
-            $(frm_elm).find("textarea#address_address").focus();
-            return false;
+            check_address_first = true;
           }
 
           if (resp.billing_address_suggestion.status === false) {
-            $(frm_elm).find("textarea#billing_address").css("border", "solid 2px red");
-            $(frm_elm).find("textarea#billing_address").closest("td").find("p").text(resp.billing_address_suggestion.message);
-            $(frm_elm).find("textarea#billing_address").focus();
-            return false;
+            check_address_second = true;
           }
 
-          // reset
-          $(frm_elm).find("textarea#address_address").css("border", "solid 1px black");
-          $(frm_elm).find("textarea#billing_address").css("border", "solid 1px black");
-          $(frm_elm).find("textarea#address_address").closest("td").find("p").text("");
-          $(frm_elm).find("textarea#billing_address").closest("td").find("p").text("");
+          if ( check_address_first || check_address_second ) {
+            if (check_address_first) {
+              $(frm_elm).find("textarea#address_address").css("border", "solid 2px red");
+              $(frm_elm).find("textarea#address_address").closest("td").find("p").text(resp.address_address_suggestion.message);
+              $(frm_elm).find("textarea#address_address").focus();
+            }
+
+            if (check_address_second) {
+              $(frm_elm).find("textarea#billing_address").css("border", "solid 2px red");
+              $(frm_elm).find("textarea#billing_address").closest("td").find("p").text(resp.billing_address_suggestion.message);
+              $(frm_elm).find("textarea#billing_address").focus();
+            }
+
+            return false;
+          }
 
           if (
             resp.address_address_suggestion.type == "1" &&
@@ -152,6 +143,17 @@ require([
       });
   });
 
+  $( "body" ).on(
+		"keyup",
+		".specm-settings-input",
+		function(e) {
+			e.preventDefault();
+			var td = $( this ).closest( "td" );
+			$( td ).find( "p" ).text( "" );
+			$( this ).css( {"border-color": "black"} );
+		}
+	);
+
   $("body").on("click", "#address_billing_clone", function(e) {
     var frm_elm = $(this).closest("form");
     if ( $(this).is(':checked') ) {
@@ -179,17 +181,17 @@ require([
         content: $t("Are you sure you want to logout ?"),
         modalClass: 'specm-modal modal-logout',
         buttons: [{
-            text: $t('Logout'),
-            class: 'action primary accept',
-            click: function () {
-              window.location.href = link;
-            }
-        }, {
             text: $t('Close'),
             click: function () {
               this.closeModal(true);
             }
-        }]
+        },{
+          text: $t('Logout'),
+          class: 'action primary accept',
+          click: function () {
+            window.location.href = link;
+          }
+      }]
     });
     }
   );  

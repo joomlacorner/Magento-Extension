@@ -254,10 +254,15 @@ class ShippopApi extends AbstractHelper
     public function prepareAddress($text)
     {
         $postData = [
-            "text" => $text
+            "inputText" => $text
         ];
 
-        return $this->cpost("http://ml-prep.shippop.com:11245/pyadc", $postData);
+        $address = $this->cpost("https://www.shippop.com/address/collection/", $postData, 'application/x-www-form-urlencoded');
+        if ( $address['status'] ) {
+            return $address['address'];
+        }
+
+        return $address;
     }
 
     /**
@@ -266,15 +271,17 @@ class ShippopApi extends AbstractHelper
      *
      * @return array
      */
-    private function cpost($endpoint, $postData)
+    private function cpost($endpoint, $postData, $conTentType = "application/json")
     {
         $curl = curl_init();
         $headers = [];
-        $headers[] = "Content-Type: application/json";
+        $headers[] = "Content-Type: " . $conTentType;
         $shippop_bearer_key = $this->config->getShippopConfig("auth", "shippop_bearer_key");
         if (!empty($shippop_bearer_key)) {
             $headers[] = "Authorization: Bearer " . $shippop_bearer_key;
         }
+
+        $_postData = ( $conTentType == "application/json" ) ? json_encode($postData, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : http_build_query( $postData );
         curl_setopt_array($curl, [
             CURLOPT_URL => $endpoint,
             CURLOPT_RETURNTRANSFER => true,
@@ -284,7 +291,7 @@ class ShippopApi extends AbstractHelper
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => json_encode($postData, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
+            CURLOPT_POSTFIELDS => $_postData,
             CURLOPT_HTTPHEADER => $headers
         ]);
 

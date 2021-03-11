@@ -215,7 +215,7 @@ if (!empty($member) && $member["status"]) {
     <script id="address-corrector-template" type="text/x-magento-template">
         <div style="overflow-y: auto;">
             <div id="address-corrector-form">
-                <% _.each(address_address_suggestion, function(data_object, value) { %>
+                <% _.each(address_address_suggestion.suggestion, function(data_object, value) { %>
                     <% if (value == 0) { %>
                             <p style='margin-bottom: 10px;'> <input checked type="radio" name="correct_address" value="<%= value %>" 
                                     data-full="<%= data_object.full %>" data-state="<%= data_object.state %>" 
@@ -229,12 +229,12 @@ if (!empty($member) && $member["status"]) {
                         <% } %>
                 <% }) %>
 
-                <% if (_.size(billing_address_suggestion) > 0) { %>
+                <% if (_.size(billing_address_suggestion.suggestion) > 0 && billing_address_suggestion.type == 2) { %>
                 
                     <hr style="margin-top: 20px;margin-bottom: 20px;" />
 
                     <h1 class="specm-second-title"><?= $block->escapeHtml(__('Please choose correct billing address for billing service')) ?></h1>
-                    <% _.each(billing_address_suggestion, function(data_object, value) { %>
+                    <% _.each(billing_address_suggestion.suggestion, function(data_object, value) { %>
                         <% if (value == 0) { %>
                                 <p style='margin-bottom: 10px;'> <input checked type="radio" name="correct_address_billing" value="<%= value %>" 
                                         data-full="<%= data_object.full %>" data-state="<%= data_object.state %>" 

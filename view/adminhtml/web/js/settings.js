@@ -75,9 +75,9 @@ require([
             tmpl;
           tmpl = progressTmpl({
             address_address_suggestion:
-              resp.address_address_suggestion.suggestion,
+              resp.address_address_suggestion,
             billing_address_suggestion:
-              resp.billing_address_suggestion.suggestion,
+              resp.billing_address_suggestion,
           });
           if ($("#shippop-popup-modal").find("div").length > 0) {
             $("#shippop-popup-modal").find("div").remove();

@@ -425,7 +425,8 @@ class Utility extends AbstractHelper
             $response['type'] = "2";
             $response["suggestion"] = $this->prepare_address_corrector($Pyadc["data"]);
         } else {
-            $response['message'] = __("Incorrect address");
+            $msg = ( !empty($response["message"]) ) ? $response["message"] : '-';
+            $response['message'] = __("Incorrect address") . " [ " . $msg . " ] ";
         }
         return $response;
     }
@@ -456,7 +457,8 @@ class Utility extends AbstractHelper
         $prefix_province = "จังหวัด";
         $prefix_zipcode = "รหัสไปรษณีย์";
         foreach ($data as $key => $value) {
-            $args[$key]['full'] = $value["cleaned_address"] . ' ' . $value["subdistrict"]["replacer"] . ' ' . $value["district"]["replacer"] . ' ' . $value["province"]["replacer"] . ' ' . $value["zipcode"]["replacer"];
+            $_address = ( empty($value["address"]) ) ? "" : $value["address"];
+            $args[$key]['full'] = $_address . ' ' . $value["subdistrict"]["replacer"] . ' ' . $value["district"]["replacer"] . ' ' . $value["province"]["replacer"] . ' ' . $value["zipcode"]["replacer"];
             $args[$key]['state'] = $value["subdistrict"]["replacer"];
             $args[$key]['district'] = $value["district"]["replacer"];
             $args[$key]['province'] = $value["province"]["replacer"];

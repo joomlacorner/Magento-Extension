@@ -336,7 +336,7 @@ class Utility extends AbstractHelper
                 $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
                 $order = $objectManager->create('\Magento\Sales\Model\Order')->load($data["order_id"]);
                 $order->setState("complete")->setStatus("complete");
-                $order->addStatusHistoryComment(__("Update status from SHIPPOP's WebHooks", "shippop-ecommerce") . " [STATUS : $status]");
+                $order->addStatusHistoryComment("Update status from SHIPPOP's WebHooks" . " [STATUS : $status]");
                 $order->save();
             }
 

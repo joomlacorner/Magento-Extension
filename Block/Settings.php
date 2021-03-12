@@ -6,6 +6,9 @@ use Shippop\Ecommerce\Helper\Config;
 use Shippop\Ecommerce\Helper\ShippopApi;
 use Magento\Framework\Serialize\SerializerInterface;
 
+/**
+ * @api
+ */
 class Settings extends \Magento\Framework\View\Element\Template
 {
     protected $_assetRepo;

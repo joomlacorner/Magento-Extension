@@ -14,11 +14,11 @@ $logo = $block->shippop_logo_register();
         <form method="post" class="specm-form-login" action="" style="padding: 0px 50px;">
             <div class="specm-frm-group">
                 <label><?= $block->escapeHtml(__('Email')); ?></label>
-                <input type="email" name="shippop_email" required>
+                <input type="email" name="shippop_email" id="shippop_email" required>
             </div>
             <div class="specm-frm-group">
                 <label><?= $block->escapeHtml(__('Password')); ?></label>
-                <input type="password" name="shippop_password" required>
+                <input type="password" name="shippop_password" id="shippop_password" required>
             </div>
             <div class="specm-frm-group">
                 <label><?= $block->escapeHtml(__('Choose country')); ?></label>
@@ -28,7 +28,7 @@ $logo = $block->shippop_logo_register();
                 </select>
             </div>
             <div class="specm-frm-group">
-                <button type="submit" name="shippop_login_submit">
+                <button type="submit" name="shippop_login_submit" id="shippop_login_submit">
                     <?= $block->escapeHtml(__('Login')); ?>
                 </button>
             </div>

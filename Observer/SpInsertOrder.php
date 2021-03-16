@@ -33,30 +33,33 @@ class SpInsertOrder implements \Magento\Framework\Event\ObserverInterface
         $order = $observer->getEvent()->getOrder();
         $model = $this->_dataFactory->create();
 
-        $orderItems = $order->getAllItems();
-        $_weight = 0;
-        foreach ($orderItems as $item) {
-            $itemData = $item->getData();
-            $qty = 1;
-            if (!empty($itemData['product_options']['info_buyRequest']['qty'])) {
-                $qty = $itemData['product_options']['info_buyRequest']['qty'];
+        $orderId = $order->getIncrementId();
+        if ( $orderId ) {
+            $orderItems = $order->getAllItems();
+            $_weight = 0;
+            foreach ($orderItems as $item) {
+                $itemData = $item->getData();
+                $qty = 1;
+                if (!empty($itemData['product_options']['info_buyRequest']['qty'])) {
+                    $qty = $itemData['product_options']['info_buyRequest']['qty'];
+                }
+                $weight = $itemData['weight'] * $qty;
+                $_weight += $weight;
             }
-            $weight = $itemData['weight'] * $qty;
-            $_weight += $weight;
+
+            $data = [
+                'order_id' => $order->getIncrementId(),
+                'shippop_status' => 'wait',
+                'extra' => $this->_serializerInterface->serialize([
+                    'weight' => $_weight,
+                    'width' => 1,
+                    'length' => 1,
+                    'height' => 1
+                ])
+            ];
+    
+            $this->_dataObjectHelper->populateWithArray($model, $data, OrderShippopInterface::class);
+            $this->_dataRepository->save($model);
         }
-
-        $data = [
-            'order_id' => $order->getId(),
-            'shippop_status' => 'wait',
-            'extra' => $this->_serializerInterface->serialize([
-                'weight' => $_weight,
-                'width' => 1,
-                'length' => 1,
-                'height' => 1
-            ])
-        ];
-
-        $this->_dataObjectHelper->populateWithArray($model, $data, OrderShippopInterface::class);
-        $this->_dataRepository->save($model);
     }
 }

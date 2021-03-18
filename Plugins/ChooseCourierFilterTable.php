@@ -56,7 +56,8 @@ class ChooseCourierFilterTable
                     ]
                 )->distinct();
             }
+            return $this->collection;
         }
-        return $this->collection;
+        return $result;
     }
 }

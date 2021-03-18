@@ -28,7 +28,7 @@ class ShippopApi extends AbstractHelper
      */
     public function environment($route = "", $shippop_server = "")
     {
-        $is_sandbox = false;
+        $is_sandbox = true;
         if (strtoupper($shippop_server) === "TH") {
             $server = [
                 'dev' => 'https://mkpservice.shippop.dev',

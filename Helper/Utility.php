@@ -362,12 +362,12 @@ class Utility extends AbstractHelper
     public function authShippop($shippop_email, $shippop_password, $shippop_server)
     {
         /* TST */
-        // $key = "tdiG06240HFAwCFOrVRxzbzuRCgMmpx1";
-        // $iv = "UJrkONI192qEmaBk";
+        $key = "tdiG06240HFAwCFOrVRxzbzuRCgMmpx1";
+        $iv = "UJrkONI192qEmaBk";
 
         /* PRD */
-        $key = "Jfkd0i20r0eif32dFis94dsafb920DKa";
-        $iv = "djowr1Aj234fd0aD";
+        // $key = "Jfkd0i20r0eif32dFis94dsafb920DKa";
+        // $iv = "djowr1Aj234fd0aD";
 
         $sign = $this->specm_encode(json_encode(['email' => $shippop_email, 'password' => $shippop_password]), $key, $iv);
         $response = $this->ShippopAPI->authBearer([

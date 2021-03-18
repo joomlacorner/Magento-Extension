@@ -7,7 +7,12 @@
                 <item name="reportcod_grid_data_source" xsi:type="string">Shippop\Ecommerce\Model\ResourceModel\OrderShippop\Grid\Collection</item>
             </argument>
         </arguments>
+    </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <plugin name="choose_courier_filter_table" type="Shippop\Ecommerce\Plugins\ChooseCourierFilterTable" sortOrder="100" disabled="false" />
+    </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <plugin name="courier_parcel_filter_table" type="Shippop\Ecommerce\Plugins\ChooseCourierFilterTable" sortOrder="100" disabled="false" />
     </type>
     <type name="Magento\Framework\App\Action\AbstractAction">
         <plugin name="store_session_var" type="Shippop\Ecommerce\Plugins\StoreSessionVar" sortOrder="10"/>

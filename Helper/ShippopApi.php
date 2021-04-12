@@ -28,7 +28,7 @@ class ShippopApi extends AbstractHelper
      */
     public function environment($route = "", $shippop_server = "")
     {
-        $is_sandbox = true;
+        $is_sandbox = false;
         if (strtoupper($shippop_server) === "TH") {
             $server = [
                 'dev' => 'https://mkpservice.shippop.dev',
@@ -254,12 +254,12 @@ class ShippopApi extends AbstractHelper
     public function prepareAddress($text)
     {
         $postData = [
-            "inputText" => $text
+            "text" => $text
         ];
 
-        $address = $this->cpost("https://www.shippop.com/address/collection/", $postData, 'application/x-www-form-urlencoded');
+        $address = $this->cpost("https://www.shippop.com/address/pyadc/", $postData);
         if ( $address['status'] ) {
-            return $address['address'];
+            return $address['data'];
         }
 
         return $address;

@@ -62,6 +62,8 @@ class StoreSessionVar
             "POSD" => "logistic_logo/POS.png",
             "DHL" => "logistic_logo/DHL.png",
             "NTW" => "logistic_logo/NTW.jpg",
+
+            "SPE" => "logistic_logo/SPE.png"
         ]);
 
         $this->_coreSession->setOnDemand(["LLM", "SKT"]);

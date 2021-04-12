@@ -362,12 +362,12 @@ class Utility extends AbstractHelper
     public function authShippop($shippop_email, $shippop_password, $shippop_server)
     {
         /* TST */
-        $key = "tdiG06240HFAwCFOrVRxzbzuRCgMmpx1";
-        $iv = "UJrkONI192qEmaBk";
+        // $key = "tdiG06240HFAwCFOrVRxzbzuRCgMmpx1";
+        // $iv = "UJrkONI192qEmaBk";
 
         /* PRD */
-        // $key = "Jfkd0i20r0eif32dFis94dsafb920DKa";
-        // $iv = "djowr1Aj234fd0aD";
+        $key = "Jfkd0i20r0eif32dFis94dsafb920DKa";
+        $iv = "djowr1Aj234fd0aD";
 
         $sign = $this->specm_encode(json_encode(['email' => $shippop_email, 'password' => $shippop_password]), $key, $iv);
         $response = $this->ShippopAPI->authBearer([
@@ -419,11 +419,11 @@ class Utility extends AbstractHelper
         if ($Pyadc["status"] == 1) {
             $response['status'] = true;
             $response['type'] = "1";
-            $response["suggestion"] = $this->prepare_address_corrector($Pyadc["data"]);
-        } elseif ($Pyadc["status"] == 0 && !empty($Pyadc["data"])) {
+            $response["suggestion"] = $this->prepare_address_corrector($Pyadc["searched"]);
+        } elseif ($Pyadc["status"] == 0 && !empty($Pyadc["searched"])) {
             $response['status'] = true;
             $response['type'] = "2";
-            $response["suggestion"] = $this->prepare_address_corrector($Pyadc["data"]);
+            $response["suggestion"] = $this->prepare_address_corrector($Pyadc["searched"]);
         } else {
             $msg = ( !empty($response["message"]) ) ? $response["message"] : '-';
             $response['message'] = __("Incorrect address") . " [ " . $msg . " ] ";
@@ -457,7 +457,7 @@ class Utility extends AbstractHelper
         $prefix_province = "จังหวัด";
         $prefix_zipcode = "รหัสไปรษณีย์";
         foreach ($data as $key => $value) {
-            $_address = ( empty($value["address"]) ) ? "" : $value["address"];
+            $_address = ( empty($value["cleaned_address"]) ) ? "" : $value["cleaned_address"];
             $args[$key]['full'] = $_address . ' ' . $value["subdistrict"]["replacer"] . ' ' . $value["district"]["replacer"] . ' ' . $value["province"]["replacer"] . ' ' . $value["zipcode"]["replacer"];
             $args[$key]['state'] = $value["subdistrict"]["replacer"];
             $args[$key]['district'] = $value["district"]["replacer"];
@@ -699,7 +699,7 @@ class Utility extends AbstractHelper
                 if (!empty($parcel_logo[$courier_code])) {
                     $logo = $parcel_logo[$courier_code];
                 } else {
-                    $logo = $parcel_logo["SHP"];
+                    $logo = $parcel_logo["SPE"];
                 }
                 $new_courier[$courier_code]["logo"] = $this->_assetRepo->getUrl("Shippop_Ecommerce::images/" . $logo);
                 $new_courier[$courier_code]["pick_up_mode"] = "";

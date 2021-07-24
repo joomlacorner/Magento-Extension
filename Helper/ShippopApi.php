@@ -257,7 +257,7 @@ class ShippopApi extends AbstractHelper
             "text" => $text
         ];
 
-        $address = $this->cpost("https://www.shippop.com/address/pyadc/", $postData);
+        $address = $this->cpost("https://www1.shippop.com/address/pyadc/", $postData);
         if ( $address['status'] ) {
             return $address['data'];
         }

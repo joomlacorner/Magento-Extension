@@ -28,6 +28,12 @@ $logo = $block->shippop_logo_register();
                 </select>
             </div>
             <div class="specm-frm-group">
+                <label class="specm-checkbox-container"><?= $block->escapeHtml(__('Mode Testing')); ?>
+                    <input type="checkbox" name="shippop_testing_mode">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <div class="specm-frm-group">
                 <button type="submit" name="shippop_login_submit" id="shippop_login_submit">
                     <?= $block->escapeHtml(__('Login')); ?>
                 </button>

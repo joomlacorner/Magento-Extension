@@ -200,7 +200,8 @@ class Utility extends AbstractHelper
             $this->prepareTrackingHistory($result);
             $request = [
                 "tracking_code" => $tracking_code,
-                "order_status" => $result["order_status"]
+                "order_status" => $result["order_status"],
+                "courier_tracking_code" => $result["courier_tracking_code"]
             ];
             $this->webHooksUpdate($request);
         }
@@ -326,10 +327,15 @@ class Utility extends AbstractHelper
         $data = $this->_crud->get_post_by_meta("tracking_code", $request["tracking_code"], "=", true);
         if (!empty($data) && !empty($data["order_id"])) {
             $status = $request["order_status"];
+            $courier_tracking_code = (isset($request["courier_tracking_code"])) ? $request["courier_tracking_code"] : false;
             $args = [
                 'order_id' => $data["order_id"],
                 'shippop_status' => $status
             ];
+            if ($courier_tracking_code) {
+                $args['courier_tracking_code'] = $courier_tracking_code;
+            }
+
             $this->_crud->update_post_meta($args);
 
             if ($status == "complete") {
@@ -359,22 +365,24 @@ class Utility extends AbstractHelper
      *
      * @return array
      */
-    public function authShippop($shippop_email, $shippop_password, $shippop_server)
+    public function authShippop($shippop_email, $shippop_password, $shippop_server, $shippop_testing_mode)
     {
-        /* TST */
-        // $key = "tdiG06240HFAwCFOrVRxzbzuRCgMmpx1";
-        // $iv = "UJrkONI192qEmaBk";
-
-        /* PRD */
-        $key = "Jfkd0i20r0eif32dFis94dsafb920DKa";
-        $iv = "djowr1Aj234fd0aD";
+        if ( $shippop_testing_mode ) {
+            /* TST */
+            $key = "tdiG06240HFAwCFOrVRxzbzuRCgMmpx1";
+            $iv = "UJrkONI192qEmaBk";
+        } else {
+            /* PRD */
+            $key = "Jfkd0i20r0eif32dFis94dsafb920DKa";
+            $iv = "djowr1Aj234fd0aD";
+        }
 
         $sign = $this->specm_encode(json_encode(['email' => $shippop_email, 'password' => $shippop_password]), $key, $iv);
         $response = $this->ShippopAPI->authBearer([
             'clientName' => 'SHIPPOP_WP',
             'clientType' => 'POSTPAID',
             'sign' => $sign
-        ], $shippop_server);
+        ], $shippop_server , $shippop_testing_mode );
 
         return $response;
     }
@@ -416,14 +424,15 @@ class Utility extends AbstractHelper
     {
         $Pyadc = $this->ShippopAPI->prepareAddress($address, []);
         $response = ['status' => false];
+        $Pyadc = $response['data'] = $Pyadc['address'];
         if ($Pyadc["status"] == 1) {
             $response['status'] = true;
             $response['type'] = "1";
-            $response["suggestion"] = $this->prepare_address_corrector($Pyadc["searched"]);
-        } elseif ($Pyadc["status"] == 0 && !empty($Pyadc["searched"])) {
+            $response["suggestion"] = $this->prepare_address_corrector($Pyadc["data"]);
+        } elseif ($Pyadc["status"] == 0 && !empty($Pyadc["data"])) {
             $response['status'] = true;
             $response['type'] = "2";
-            $response["suggestion"] = $this->prepare_address_corrector($Pyadc["searched"]);
+            $response["suggestion"] = $this->prepare_address_corrector($Pyadc["data"]);
         } else {
             $msg = ( !empty($response["message"]) ) ? $response["message"] : '-';
             $response['message'] = __("Incorrect address") . " [ " . $msg . " ] ";
@@ -563,18 +572,18 @@ class Utility extends AbstractHelper
         if ($to["state"] == "") {
             $to["state"] = (!empty($shippingAddress['city'])) ? $shippingAddress['city'] : "-";
         }
-        $shippop_server = $this->config->getShippopConfig("auth", "shippop_server");
-        if (strtoupper($shippop_server) === "TH") {
-            $address_corrector = $this->addressCorrector($shippingAddress['street']);
-            if ($address_corrector["status"] === false) {
-                return ["status" => false, "message" => __("Incorrect address")];
-            } elseif ($address_corrector["type"] == "1") {
-                $to["province"] = $address_corrector["suggestion"][0]["province"];
-                $to["state"] = $address_corrector["suggestion"][0]["state"];
-                $to["district"] = $address_corrector["suggestion"][0]["district"];
-                $to["postcode"] = $address_corrector["suggestion"][0]["postcode"];
-            }
-        }
+        // $shippop_server = $this->config->getShippopConfig("auth", "shippop_server");
+        // if (strtoupper($shippop_server) === "TH") {
+        //     $address_corrector = $this->addressCorrector($shippingAddress['street']);
+        //     if ($address_corrector["status"] === false) {
+        //         return ["status" => false, "message" => __("Incorrect address")];
+        //     } elseif ($address_corrector["type"] == "1") {
+        //         $to["province"] = $address_corrector["suggestion"][0]["province"];
+        //         $to["state"] = $address_corrector["suggestion"][0]["state"];
+        //         $to["district"] = $address_corrector["suggestion"][0]["district"];
+        //         $to["postcode"] = $address_corrector["suggestion"][0]["postcode"];
+        //     }
+        // }
 
         $products = [];
         if ($get_products) {

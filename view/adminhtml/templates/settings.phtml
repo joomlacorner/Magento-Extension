@@ -1,6 +1,7 @@
 <?php
 $email = $block->getEmail();
 $server = $block->getServer();
+$mode   = $block->getMode();
 $member = $block->getMember();
 $logout = $block->logoutUrl();
 $pickup = $block->getPickup();
@@ -20,14 +21,14 @@ if (!empty($pickup)) {
     $pickup_postcode = (!empty($pickup["postcode"])) ? $pickup["postcode"] : "";
 }
 
-$billing_name = $billing_name_title = $billing_tax_id = $billing_tel = $billing_address = "";
-if (!empty($member) && $member["status"]) {
-    $billing_name = (!empty($member["data"]["billing"]["name"])) ? $member["data"]["billing"]["name"] : "";
-    $billing_name_title = (!empty($member["data"]["billing"]["name_title"])) ? $member["data"]["billing"]["name_title"] : "";
-    $billing_tax_id = (!empty($member["data"]["billing"]["tax_id"])) ? $member["data"]["billing"]["tax_id"] : "";
-    $billing_tel = (!empty($member["data"]["billing"]["phone"])) ? $member["data"]["billing"]["phone"] : "";
-    $billing_address = (!empty($member["data"]["billing"]["address"])) ? $member["data"]["billing"]["address"] : "";
-}
+// $billing_name = $billing_name_title = $billing_tax_id = $billing_tel = $billing_address = "";
+// if (!empty($member) && $member["status"]) {
+//     $billing_name = (!empty($member["data"]["billing"]["name"])) ? $member["data"]["billing"]["name"] : "";
+//     $billing_name_title = (!empty($member["data"]["billing"]["name_title"])) ? $member["data"]["billing"]["name_title"] : "";
+//     $billing_tax_id = (!empty($member["data"]["billing"]["tax_id"])) ? $member["data"]["billing"]["tax_id"] : "";
+//     $billing_tel = (!empty($member["data"]["billing"]["phone"])) ? $member["data"]["billing"]["phone"] : "";
+//     $billing_address = (!empty($member["data"]["billing"]["address"])) ? $member["data"]["billing"]["address"] : "";
+// }
 ?>
 
 <div class="wrap">
@@ -53,6 +54,14 @@ if (!empty($member) && $member["status"]) {
                     <td>
                         <input type="text" class="specm-settings-input" 
                         value="<?= $block->escapeHtmlAttr($country) ?>" 
+                        readonly="" style="opacity: 0.9;">
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><?= $block->escapeHtml(__('Mode Testing')); ?></th>
+                    <td>
+                        <input type="text" class="specm-settings-input" 
+                        value="<?= $block->escapeHtmlAttr( ( $mode ) ? "Yes" : "No" ) ?>" 
                         readonly="" style="opacity: 0.9;">
                     </td>
                 </tr>
@@ -146,68 +155,76 @@ if (!empty($member) && $member["status"]) {
                         </td>
                     </tr>
                 <?php endif; ?>
-                    <tr>
+                    <!-- <tr>
                         <th scope="row">
                         </th>
                         <td>
-                            <input type="checkbox" id="address_billing_clone" value="clone"><label for="address_billing_clone"> <?= $block->escapeHtml(__("Copy store's address intro billing address")); ?></label>
+                            <input type="checkbox" id="address_billing_clone" value="clone"><label for="address_billing_clone"></label>
+                        </td>
+                    </tr> -->
+                    <tr>
+                        <th scope="row"></th>
+                        <td>
+                            <button type="submit" class="button button-primary primary">
+                                <?= $block->escapeHtml(__("Update")); ?>
+                            </button>
                         </td>
                     </tr>
             </tbody>
         </table>
-        <h2 style="margin-top: 20px;font-weight: 600;"><?= $block->escapeHtml(__("Billing and invoice addresses")); ?></h2>
+        <!-- <h2 style="margin-top: 20px;font-weight: 600;"><?= $block->escapeHtml(__("Billing and invoice addresses")); ?></h2>
         <hr>
         <table class="form-table" role="presentation">
             <tbody>
                 <tr>
-                    <th scope="row"><?= $block->escapeHtml(__("Name and Surname")); ?></th>
+                    <th scope="row"></th>
                     <td>
                         <input type="hidden" class="specm-settings-input" 
                         id="billing_name_title" name="specm_settings[billing][name_title]" 
-                        value="<?= $block->escapeHtmlAttr($billing_name_title) ?>">
+                        value="">
 
                         <input type="text" class="specm-settings-input" 
                         id="billing_name" name="specm_settings[billing][name]" 
-                        value="<?= $block->escapeHtmlAttr($billing_name) ?>"
-                        placeholder="<?= $block->escapeHtml(__("Name and Surname")); ?>">
+                        value=""
+                        placeholder="">
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row"><?= $block->escapeHtml(__("Tax ID")); ?></th>
+                    <th scope="row"></th>
                     <td>
                         <input type="text" class="specm-settings-input" 
                         id="billing_tax_id" name="specm_settings[billing][tax_id]" 
-                        value="<?= $block->escapeHtmlAttr($billing_tax_id) ?>"
-                        placeholder="<?= $block->escapeHtml(__("Tax ID")); ?>">
+                        value=""
+                        placeholder="">
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row"><?= $block->escapeHtml(__("Contact number")); ?></th>
+                    <th scope="row"></th>
                     <td>
                         <input type="text" class="specm-settings-input" 
                         id="billing_tel" name="specm_settings[billing][tel]" 
-                        pattern="[0-9]{10}" value="<?= $block->escapeHtmlAttr($billing_tel) ?>"
-                        placeholder="<?= $block->escapeHtml(__("Contact number")); ?>">
+                        pattern="[0-9]{10}" value=""
+                        placeholder="">
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row"><?= $block->escapeHtml(__("Address")); ?></th>
+                    <th scope="row"></th>
                     <td>
                         <p style='color: red;'></p>
                         <textarea name="specm_settings[billing][address]" class="specm-settings-input" id="billing_address" cols="20" style="resize: none;" 
-                        rows="5" placeholder="<?= $block->escapeHtml(__("Please fill in your address")); ?>"><?= $block->escapeHtmlAttr($billing_address) ?></textarea>
+                        rows="5" placeholder=""></textarea>
                     </td>
                 </tr>
                 <tr>
                     <th scope="row"></th>
                     <td>
                         <button type="submit" class="button button-primary primary">
-                            <?= $block->escapeHtml(__("Update")); ?>
+                            
                         </button>
                     </td>
                 </tr>
             </tbody>
-        </table> 
+        </table>  -->
     </form>
 </div>
 

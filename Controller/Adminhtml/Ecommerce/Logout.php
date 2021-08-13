@@ -58,6 +58,7 @@ class Logout extends Action
             "billing_address/shippop_telephone",
             "billing_address/shippop_address",
             "auth/shippop_server",
+            "auth/shippop_testing_mode",
             "address/pickup",
             "auth/shippop_auth_email",
             "auth/shippop_bearer_key",

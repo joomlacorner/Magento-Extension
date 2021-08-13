@@ -169,7 +169,7 @@ form div.specm-frm-group button[type="button"] {
 /* Style the checkmark/indicator */
 .specm-checkbox-container .checkmark:after {
   left: 6px;
-  top: 4px;
+  top: 6px;
   width: 5px;
   height: 7px;
   border: solid white;

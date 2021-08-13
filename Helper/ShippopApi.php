@@ -23,12 +23,13 @@ class ShippopApi extends AbstractHelper
     /**
      * @param string $route
      * @param string $shippop_server
+     * @param string $shippop_testing_mode
      *
      * @return array
      */
-    public function environment($route = "", $shippop_server = "")
+    public function environment($route = "", $shippop_server = "" , $shippop_testing_mode = "")
     {
-        $is_sandbox = false;
+        $is_sandbox = ( $shippop_testing_mode == "1" ) ? true : false;
         if (strtoupper($shippop_server) === "TH") {
             $server = [
                 'dev' => 'https://mkpservice.shippop.dev',
@@ -66,19 +67,27 @@ class ShippopApi extends AbstractHelper
      * @param mixed $route
      * @param mixed $postData
      * @param string $shippop_server
+     * @param string $shippop_testing_mode
      *
      * @return array
      */
-    private function post($route, $postData, $shippop_server = "")
+    private function post($route, $postData, $shippop_server = "", $shippop_testing_mode = "")
     {
         if ($shippop_server == "") {
             $shippop_server = $this->config->getShippopConfig("auth", "shippop_server");
         }
         
+        if ($shippop_testing_mode == "") {
+            $shippop_testing_mode = $this->config->getShippopConfig("auth", "shippop_testing_mode");
+        }
+        if ( empty($shippop_testing_mode) ) {
+            $shippop_testing_mode = 0;
+        }
+
         if (empty($shippop_server)) {
             return false;
         }
-        $endpoint = $this->environment($route, $shippop_server);
+        $endpoint = $this->environment($route, $shippop_server, $shippop_testing_mode);
         if ($endpoint === false) {
             return [
                 'status' => false,
@@ -94,9 +103,9 @@ class ShippopApi extends AbstractHelper
      *
      * @return array
      */
-    public function authBearer($postData, $shippop_server)
+    public function authBearer($postData, $shippop_server , $shippop_testing_mode)
     {
-        return $this->post("auth/login", $postData, $shippop_server);
+        return $this->post("auth/login", $postData, $shippop_server , $shippop_testing_mode);
     }
 
     /**
@@ -254,13 +263,13 @@ class ShippopApi extends AbstractHelper
     public function prepareAddress($text)
     {
         $postData = [
-            "text" => $text
+            "inputText" => $text
         ];
 
-        $address = $this->cpost("https://www1.shippop.com/address/pyadc/", $postData);
-        if ( $address['status'] ) {
-            return $address['data'];
-        }
+        $address = $this->cpost("https://www1.shippop.com/address/collection/", $postData , "application/x-www-form-urlencoded");
+        // if ( $address['status'] ) {
+        //     return $address['data'];
+        // }
 
         return $address;
     }

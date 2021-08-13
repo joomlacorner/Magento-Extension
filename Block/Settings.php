@@ -52,6 +52,15 @@ class Settings extends \Magento\Framework\View\Element\Template
     }
 
     /**
+     * @return string
+     */
+    public function getMode()
+    {
+        $shippop_testing_mode = $this->config->getShippopConfig("auth", "shippop_testing_mode");
+        return (empty($shippop_testing_mode) || $shippop_testing_mode == "0") ? false : true;
+    }
+
+    /**
      * @return array
      */
     public function getPickup()

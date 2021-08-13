@@ -24,6 +24,7 @@ require([
       shippop_email: $(frm_elm).find("input[name='shippop_email']").val(),
       shippop_password: $(frm_elm).find("input[name='shippop_password']").val(),
       shippop_server: $(frm_elm).find("select[name='shippop_server']").val(),
+      shippop_testing_mode: $(frm_elm).find("input[name='shippop_testing_mode']:checked").val(),
       shippop_method: "LOGIN",
     };
 

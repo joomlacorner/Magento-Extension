@@ -1,17 +1,9 @@
 require([
   "jquery",
-  "mage/translate",
+  "mage/template",
+  "Magento_Ui/js/modal/modal",
   "Specm_utility",
-], function ($, $t, Specm_utility) {
-
-  var checkExist = setInterval(function() {
-    if ($("select[name='select_print_label']").length) {
-          jQuery("select[name='select_print_label']").after('<p style="display: inline;margin: 0px;font-style: italic;"> ' + $t("Please choose your orders first.") + ' </p>');
-       clearInterval(checkExist);
-    }
- }, 100); // check every 100ms
-
-
+], function ($, mageTemplate, modal, Specm_utility) {
 
   $(document).on(
     "change",

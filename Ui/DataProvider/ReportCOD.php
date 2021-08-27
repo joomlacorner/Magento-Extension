@@ -93,19 +93,8 @@ class ReportCOD extends AbstractDataProvider
             $items = $response["data"];
         }
 
-        // $pagesize = (int) $this->request->getParam('paging')['pageSize'];
-        if (array_key_exists("paging", $all_request) && !empty($all_request["paging"]["pageSize"])) {
-            $pagesize = $all_request["paging"]["pageSize"];
-        } else {
-            $pagesize = 20;
-        }
-
-        // $pageCurrent = (int) $this->request->getParam('paging')['current'];
-        if (array_key_exists("paging", $all_request) && !empty($all_request["paging"]["current"])) {
-            $pageCurrent = $all_request["paging"]["current"];
-        } else {
-            $pageCurrent = 1;
-        }
+        $pagesize = (int) $this->request->getParam('paging')['pageSize'];
+        $pageCurrent = (int) $this->request->getParam('paging')['current'];
         $pageoffset = ($pageCurrent - 1) * $pagesize;
 
         return [

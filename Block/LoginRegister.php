@@ -2,9 +2,6 @@
 
 namespace Shippop\Ecommerce\Block;
 
-/**
- * @api
- */
 class LoginRegister extends \Magento\Framework\View\Element\Template
 {
     protected $_assetRepo;

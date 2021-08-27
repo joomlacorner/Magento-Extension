@@ -2,10 +2,6 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
         <shippop_configuration>
-            <auth>
-                <is_login>0</is_login>
-                <is_thailand>1</is_thailand>
-            </auth>
         </shippop_configuration>
     </default>
 </config>

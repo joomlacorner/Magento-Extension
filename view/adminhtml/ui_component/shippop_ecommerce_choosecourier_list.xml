@@ -64,7 +64,7 @@
         <settings>
             <childDefaults>
                 <param name="fieldAction" xsi:type="array">
-                    <item name="provider" xsi:type="string">shippop_sales_order_grid_data_source.shippop_sales_order_grid_data_source.shippop_sales_order_columns.actions</item>
+                    <item name="provider" xsi:type="string">sales_order_grid.sales_order_grid.shippop_sales_order_columns.actions</item>
                     <item name="target" xsi:type="string">applyAction</item>
                     <item name="params" xsi:type="array">
                         <item name="0" xsi:type="string">view</item>

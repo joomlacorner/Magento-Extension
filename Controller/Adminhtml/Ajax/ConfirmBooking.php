@@ -59,8 +59,8 @@ class ConfirmBooking extends \Magento\Backend\App\Action
                         }
 
                         $response['status'] = true;
-                        $response['message'] = "<h3 style='text-align: center;'>" . __("Booking confirmed and Payment completed") . "</h3>";
-                        $response['message2'] = "<p style='text-align: center;'>" . __("Please print waybill") . "</p>";
+                        $response['message'] = "<h3>" . __("Booking confirmed and Payment completed") . "</h3>";
+                        $response['message2'] = "<p>" . __("Please print waybill") . "</p>";
                         $response['print_waybill_link'] = $this->urlBuilder->getUrl("shippop/ecommerce/courierparcel");
                     } else {
                         $response['status'] = false;

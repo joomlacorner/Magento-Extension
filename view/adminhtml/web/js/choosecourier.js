@@ -1,10 +1,9 @@
 require([
   "jquery",
-  "mage/translate",
   "mage/template",
   "Magento_Ui/js/modal/modal",
   "Specm_utility"
-], function ($, $t, mageTemplate, modal, Specm_utility) {
+], function ($, mageTemplate, modal, Specm_utility) {
 
   $("body").on("click", "button.choose_courier", function (event) {
     event.preventDefault();
@@ -46,18 +45,18 @@ require([
                 type: "popup",
                 responsive: true,
                 innerScroll: true,
-                title: $t("Choose Courier"),
+                title: $.mage.__("Choose Courier"),
                 modalClass: "specm-modal",
                 buttons: [
                   {
-                    text: $t("Cancel"),
+                    text: $.mage.__("Cancel"),
                     class: "button button alert-modal-button-close",
                     click: function () {
                       this.closeModal(true);
                     },
                   },
                   {
-                    text: $t("Confirm"),
+                    text: $.mage.__("Confirm"),
                     class: "button btn-primary button-shippop-submit",
                     click: function () {
                       this.closeModal(true);
@@ -78,7 +77,7 @@ require([
           Specm_utility.showAlert( "Error", errorThrown, "F", false, "close");
         });
     } else {
-      Specm_utility.showAlert( "Alert", $t("Please select order first"), "F", false, "close");
+      Specm_utility.showAlert( "Alert", "Please select order first", "F", false, "close");
     }
   });
 
@@ -116,19 +115,6 @@ require([
     }
   });
 
-  $(document).ready(function ($) {
-    if ( $("body.shippop-ecommerce-choosecourier").length > 0 ) {
-      var txt = window.specm_translate_sub_choose_parcel;
-      if (typeof txt == "undefined") {
-        txt = "";
-        setTimeout(() => {
-          txt = window.specm_translate_sub_choose_parcel;
-        }, 3000);
-      }
-      $("body.shippop-ecommerce-choosecourier").find("h1.page-title").after('<p style="margin: 0px;font-style: italic;"> ' + txt + ' </p>');
-    }
-  });
-
   function btnBooking() {
     var frm_elm = $("#wp-shippop-ecommerce-booking");
     var select_courier = frm_elm.find("#select_courier").val();
@@ -157,8 +143,8 @@ require([
         .done(function (resp) {
           Specm_utility.hidePreload();
           if (resp.status) {
-            Specm_utility.showAlert( $t("Success"), resp.message + resp.message2, "S", true, "reload", {
-              text: $t("Print waybill"),
+            Specm_utility.showAlert( "Success", resp.message + resp.message2, "S", true, "reload", {
+              text: $.mage.__("Print waybill"),
               class: "action-primary action-link",
               click: function() {
                 window.location.href = resp.print_waybill_link;

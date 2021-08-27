@@ -83,6 +83,7 @@ class OrderShippopRepository implements OrderShippopRepositoryInterface
             /** @var DataInterface|\Magento\Framework\Model\AbstractModel $data */
             $this->_resource->save($data);
         } catch (\Exception $e) {
+            $this->_utility->specm_writing_log($e->getMessage(), $e);
             throw new CouldNotSaveException(__(
                 'Could not save the data: %1',
                 $e->getMessage()
@@ -186,6 +187,7 @@ class OrderShippopRepository implements OrderShippopRepositoryInterface
         } catch (ValidatorException $e) {
             throw new CouldNotSaveException(__($e->getMessage()));
         } catch (\Exception $e) {
+            $this->_utility->specm_writing_log($e->getMessage(), $e);
             throw new StateException(
                 __('Unable to remove data %1', $id)
             );

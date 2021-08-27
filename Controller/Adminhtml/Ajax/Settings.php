@@ -62,24 +62,24 @@ class Settings extends \Magento\Backend\App\Action
                 $this->_serializerInterface->serialize($pickup_address)
             );
 
-            // if ($this->getRequest()->getParam("billing_name_title")) {
-            //     $name_title = $this->getRequest()->getParam("billing_name_title");
-            // } else {
-            //     $name_title = "";
-            // }
-            // $billing_update = [
-            //     "phone" => $this->getRequest()->getParam("billing_tel"),
-            //     "address" => $this->getRequest()->getParam("billing_address"),
-            //     "tax_id" => $this->getRequest()->getParam("billing_tax_id"),
-            //     "name" => $this->getRequest()->getParam("billing_name"),
-            //     "name_title" => $name_title
-            // ];
-            // $response = $this->_utility->updateBilling($billing_update);
-            // if (!empty($response) && $response["status"]) {
-            //     $this->_messageManager->addSuccessMessage(__("Information updated"));
-            // } else {
-            //     $this->_messageManager->addErrorMessage(__("Information can't update") . " " . $response["message"]);
-            // }
+            if ($this->getRequest()->getParam("billing_name_title")) {
+                $name_title = $this->getRequest()->getParam("billing_name_title");
+            } else {
+                $name_title = "";
+            }
+            $billing_update = [
+                "phone" => $this->getRequest()->getParam("billing_tel"),
+                "address" => $this->getRequest()->getParam("billing_address"),
+                "tax_id" => $this->getRequest()->getParam("billing_tax_id"),
+                "name" => $this->getRequest()->getParam("billing_name"),
+                "name_title" => $name_title
+            ];
+            $response = $this->_utility->updateBilling($billing_update);
+            if (!empty($response) && $response["status"]) {
+                $this->_messageManager->addSuccessMessage(__("Information updated"));
+            } else {
+                $this->_messageManager->addErrorMessage(__("Information can't update") . " " . $response["message"]);
+            }
             $response = [
                 'status' => true,
             ];

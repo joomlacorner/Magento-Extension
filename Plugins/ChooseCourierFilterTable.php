@@ -34,8 +34,8 @@ class ChooseCourierFilterTable
         if (in_array($requestName, $args)) {
             $where_join = "";
             if ($requestName == 'shippop_sales_order_grid_data_source') {
-                $where_join = "main_table.entity_id = sales_order_shippop.order_id";
-                $where_join .= " AND sales_order_shippop.shippop_status = 'wait' AND (main_table.status = 'processing' OR main_table.payment_method = 'cashondelivery')";
+                $where_join = "main_table.entity_id = sales_order_shippop.order_id AND ";
+                $where_join .= "sales_order_shippop.shippop_status = 'wait' AND main_table.status = 'processing'";
             } elseif ($requestName == 'shippop_parcel_sales_order_grid_data_source') {
                 $where_join = "main_table.entity_id = sales_order_shippop.order_id AND ";
                 $where_join .= "sales_order_shippop.shippop_status != 'wait'";
@@ -56,8 +56,7 @@ class ChooseCourierFilterTable
                     ]
                 )->distinct();
             }
-            return $this->collection;
         }
-        return $result;
+        return $this->collection;
     }
 }

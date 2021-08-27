@@ -40,27 +40,20 @@ class LoginRegister extends \Magento\Backend\App\Action
                 $this->getRequest()->getParam("shippop_email") &&
                 $this->getRequest()->getParam("shippop_password") &&
                 $this->getRequest()->getParam("shippop_server")) {
-                $shippop_testing_mode = (!empty($this->getRequest()->getParam("shippop_testing_mode")) && $this->getRequest()->getParam("shippop_testing_mode") == 'on' ) ? true : false;
                 $shippop_server = ($this->getRequest()->getParam("shippop_server") == "MY") ? "MY" : "TH";
+                $this->_utility->setShippopConfig("auth", "shippop_server", $shippop_server);
+                $this->_utility->setShippopConfig("auth", "is_thailand", ($shippop_server == "TH") ? "1" : "0");
+    
                 $shippop_email = $this->getRequest()->getParam("shippop_email");
                 $shippop_password = $this->getRequest()->getParam("shippop_password");
                 $shippop_email = trim($shippop_email);
                 $shippop_password = trim($shippop_password);
 
-                $this->_utility->setShippopConfig("auth", "shippop_server", $shippop_server);
-                $this->_utility->setShippopConfig("auth", "shippop_testing_mode", ($shippop_testing_mode) ? "1" : "0");
-
-                $response = $this->_utility->authShippop($shippop_email, $shippop_password, $shippop_server , $shippop_testing_mode);
+                $response = $this->_utility->authShippop($shippop_email, $shippop_password, $shippop_server);
                 if ($response["status"]) {
-                    $this->_utility->setShippopConfig("auth", "is_thailand", ($shippop_server == "TH") ? "1" : "0");
                     $this->_utility->setShippopConfig("auth", "shippop_bearer_key", $response["data"]["token"]);
                     $this->_utility->setShippopConfig("auth", "shippop_auth_email", $shippop_email);
-                    $this->_utility->setShippopConfig("auth", "is_login", "1");
                     $response['redirect_url'] = $this->urlBuilder->getUrl("shippop/ecommerce/settings");
-                } else {
-                    $this->_utility->deleteShippopConfig("auth/shippop_server");
-                    $this->_utility->deleteShippopConfig("auth/shippop_testing_mode");
-                    $response['message'] = __("Can’t connect. Please try again later") . " [ " . __($response['message']) . " ] ";
                 }
             } else {
                 $response = [

@@ -2,9 +2,6 @@
 
 namespace Shippop\Ecommerce\Block;
 
-/**
- * @api
- */
 class TrackingHistory extends \Magento\Framework\View\Element\Template
 {
     protected $_utility;

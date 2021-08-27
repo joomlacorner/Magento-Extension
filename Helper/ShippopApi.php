@@ -23,13 +23,12 @@ class ShippopApi extends AbstractHelper
     /**
      * @param string $route
      * @param string $shippop_server
-     * @param string $shippop_testing_mode
      *
      * @return array
      */
-    public function environment($route = "", $shippop_server = "" , $shippop_testing_mode = "")
+    public function environment($route = "", $shippop_server = "")
     {
-        $is_sandbox = ( $shippop_testing_mode == "1" ) ? true : false;
+        $is_sandbox = false;
         if (strtoupper($shippop_server) === "TH") {
             $server = [
                 'dev' => 'https://mkpservice.shippop.dev',
@@ -67,27 +66,19 @@ class ShippopApi extends AbstractHelper
      * @param mixed $route
      * @param mixed $postData
      * @param string $shippop_server
-     * @param string $shippop_testing_mode
      *
      * @return array
      */
-    private function post($route, $postData, $shippop_server = "", $shippop_testing_mode = "")
+    private function post($route, $postData, $shippop_server = "")
     {
         if ($shippop_server == "") {
             $shippop_server = $this->config->getShippopConfig("auth", "shippop_server");
         }
         
-        if ($shippop_testing_mode == "") {
-            $shippop_testing_mode = $this->config->getShippopConfig("auth", "shippop_testing_mode");
-        }
-        if ( empty($shippop_testing_mode) ) {
-            $shippop_testing_mode = 0;
-        }
-
         if (empty($shippop_server)) {
             return false;
         }
-        $endpoint = $this->environment($route, $shippop_server, $shippop_testing_mode);
+        $endpoint = $this->environment($route, $shippop_server);
         if ($endpoint === false) {
             return [
                 'status' => false,
@@ -103,9 +94,9 @@ class ShippopApi extends AbstractHelper
      *
      * @return array
      */
-    public function authBearer($postData, $shippop_server , $shippop_testing_mode)
+    public function authBearer($postData, $shippop_server)
     {
-        return $this->post("auth/login", $postData, $shippop_server , $shippop_testing_mode);
+        return $this->post("auth/login", $postData, $shippop_server);
     }
 
     /**
@@ -263,15 +254,10 @@ class ShippopApi extends AbstractHelper
     public function prepareAddress($text)
     {
         $postData = [
-            "inputText" => $text
+            "text" => $text
         ];
 
-        $address = $this->cpost("https://www1.shippop.com/address/collection/", $postData , "application/x-www-form-urlencoded");
-        // if ( $address['status'] ) {
-        //     return $address['data'];
-        // }
-
-        return $address;
+        return $this->cpost("http://ml-prep.shippop.com:11245/pyadc", $postData);
     }
 
     /**
@@ -280,17 +266,15 @@ class ShippopApi extends AbstractHelper
      *
      * @return array
      */
-    private function cpost($endpoint, $postData, $conTentType = "application/json")
+    private function cpost($endpoint, $postData)
     {
         $curl = curl_init();
         $headers = [];
-        $headers[] = "Content-Type: " . $conTentType;
+        $headers[] = "Content-Type: application/json";
         $shippop_bearer_key = $this->config->getShippopConfig("auth", "shippop_bearer_key");
         if (!empty($shippop_bearer_key)) {
             $headers[] = "Authorization: Bearer " . $shippop_bearer_key;
         }
-
-        $_postData = ( $conTentType == "application/json" ) ? json_encode($postData, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : http_build_query( $postData );
         curl_setopt_array($curl, [
             CURLOPT_URL => $endpoint,
             CURLOPT_RETURNTRANSFER => true,
@@ -300,7 +284,7 @@ class ShippopApi extends AbstractHelper
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => $_postData,
+            CURLOPT_POSTFIELDS => json_encode($postData, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
             CURLOPT_HTTPHEADER => $headers
         ]);
 

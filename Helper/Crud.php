@@ -37,6 +37,9 @@ class Crud extends AbstractHelper
     public function get_post_meta($order_id, $key)
     {
         $entity = $this->_dataRepository->getById($order_id);
+        if ( empty($entity) ) {
+            return false;
+        }
         $data = $entity->getData();
         if (!empty($key) && !empty($data[$key])) {
             return $data[$key];

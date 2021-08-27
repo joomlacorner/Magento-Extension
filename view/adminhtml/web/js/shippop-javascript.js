@@ -1,9 +1,86 @@
 require([
   "jquery",
+  "mage/translate",
   "mage/template",
   "Magento_Ui/js/modal/modal",
-  "Specm_utility"
-], function ($, mageTemplate, modal, Specm_utility) {
+  "Specm_utility",
+], function ($, $t, mageTemplate, modal, Specm_utility) {
+  // for menu
+  $(document).ready(function () {
+    check_menu_available();
+  });
+
+  $( "body" ).on(
+		"click",
+		"#menu-shippop-ecommerce-main-menu",
+		function(e) {
+      check_menu_available();
+		}
+	);
+
+
+  var existCondition = setInterval(function () {
+    var vs = jQuery("#menu-shippop-ecommerce-main-menu").find("ul > li:hidden")
+      .length;
+    // console.log(vs);
+    if (vs <= 1) {
+      // console.log("Exists!");
+      clearInterval(existCondition);
+      check_menu_available();
+    }
+  }, 100); // check every 100ms
+
+  function check_menu_available() {
+    data = {
+      form_key: FORM_KEY,
+    };
+
+    jQuery
+      .ajax({
+        url: window.specm_ajax_getstatus,
+        method: "POST",
+        data: data,
+        dataType: "json",
+        beforeSend: function (xhr) {
+        },
+      })
+      .done(function (resp) {
+        if (resp.status) {
+          if (resp.login) {
+            if (resp.address_pickup === false) {
+              $("#menu-shippop-ecommerce-main-menu")
+                .find("li.item-settings")
+                .show();
+              return false;
+            }
+            $("#menu-shippop-ecommerce-main-menu")
+              .find("li.item-choose-courier")
+              .show();
+            $("#menu-shippop-ecommerce-main-menu")
+              .find("li.item-courier-parcel")
+              .show();
+            if (resp.cod) {
+              $("#menu-shippop-ecommerce-main-menu")
+                .find("li.item-report-cod")
+                .show();
+            }
+            $("#menu-shippop-ecommerce-main-menu")
+              .find("li.item-settings")
+              .show();
+          } else {
+            $("#menu-shippop-ecommerce-main-menu")
+              .find("li.item-login-register")
+              .show();
+          }
+        } else {
+          $("#menu-shippop-ecommerce-main-menu")
+            .find("li.item-login-register")
+            .show();
+        }
+      })
+      .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+      });
+  }
 
   $(document).on("click", "a.shippop-tracking-history", function (event) {
     event.preventDefault();
@@ -47,7 +124,7 @@ require([
                 innerScroll: true,
                 modalClass: "specm-modal",
                 buttons: [],
-                title: $.mage.__("Shipping Status"),
+                title: $t("Shipping Status"),
               },
               $("#shippop-popup-modal")
             );
@@ -62,5 +139,4 @@ require([
         });
     }
   });
-
 });

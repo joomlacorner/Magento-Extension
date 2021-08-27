@@ -2,13 +2,17 @@ form[name='settings'] > table > tbody > tr > th {
     font-size: 16px;
 }
 
-form[name='settings'] > table > tbody > tr > td > input {
+form[name='settings'] > table > tbody > tr > td > input[type='text'],
+form[name='settings'] > table > tbody > tr > td > input[type='email'],
+form[name='settings'] > table > tbody > tr > td > input[type='phone'],
+form[name='settings'] > table > tbody > tr > td > input[type='number']  {
     font-size: 16px;
     height: 38px;
     width: 32em;
     border-radius: 5px;
     padding: 5px;
     border-width: thin !important;
+    border: solid 1px black;
 }
 
 form[name='settings'] > table > tbody > tr > td > textarea {
@@ -18,6 +22,7 @@ form[name='settings'] > table > tbody > tr > td > textarea {
     padding: 5px;
     resize: none;
     border-width: thin !important;
+    border: solid 1px black;
 }
 
 .form-table th {
@@ -26,7 +31,7 @@ form[name='settings'] > table > tbody > tr > td > textarea {
     padding: 20px 10px 20px 0;
     width: 200px;
     line-height: 1.3;
-    font-weight: 600;
+    font-weight: normal !important;
 }
 
 .form-table td {
@@ -45,4 +50,21 @@ form[name='settings'] > table > tbody > tr > td > textarea {
 
 span.red-star-setting {
     color: red;
+}
+
+aside.modal-correcter div.modal-inner-wrap {
+    max-width: 35% !important;
+}
+
+aside.modal-logout div.modal-inner-wrap {
+    max-width: 20% !important;
+}
+
+
+button.specm-logout-btn {
+    color: red;
+    border: solid 1px red;
+    position: absolute;
+    right: 30px;
+    background: white;
 }

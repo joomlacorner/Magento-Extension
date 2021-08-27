@@ -189,6 +189,27 @@ class Utility extends AbstractHelper
     }
 
     /**
+     * @param int $purchase_id
+     *
+     * @return array
+    */
+    public function trackingPurchase($purchase_id = 0)
+    {
+        $result = $this->ShippopAPI->tracking_purchase($purchase_id);
+        if (!empty($result) && !empty($result['status']) && $result['status']) {
+            foreach ($result['data'] as $value) {
+                $request = [
+                    "tracking_code" => $value['tracking_code'],
+                    "order_status" => $value["status"],
+                    "courier_tracking_code" => $value["courier_tracking_code"]
+                ];
+                $this->webHooksUpdate($request);
+            }
+        }
+        return $result;
+    }
+
+    /**
      * @param string $tracking_code
      *
      * @return array
@@ -200,7 +221,8 @@ class Utility extends AbstractHelper
             $this->prepareTrackingHistory($result);
             $request = [
                 "tracking_code" => $tracking_code,
-                "order_status" => $result["order_status"]
+                "order_status" => $result["order_status"],
+                "courier_tracking_code" => $result["courier_tracking_code"]
             ];
             $this->webHooksUpdate($request);
         }
@@ -242,6 +264,7 @@ class Utility extends AbstractHelper
                     $file_removes = $this->clearFileInFolder($full_path);
                 }
 
+                $file_removes = [];
                 if (file_put_contents($full_path . $file_name, $data)) {
                     $pub_url = $objectManager->get('Magento\Store\Model\StoreManagerInterface')->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
 
@@ -308,7 +331,7 @@ class Utility extends AbstractHelper
                 $this->_crud->update_post_meta($args);
             }
             $result['status'] = true;
-            $result['message'] = (!empty($result["message"])) ? $result["message"] : "Success";
+            $result['message'] = (!empty($result["message"])) ? $result["message"] : __("Success");
         } else {
             $result['message'] = $result["code"] . " - " . $result["message"];
         }
@@ -325,17 +348,22 @@ class Utility extends AbstractHelper
         $data = $this->_crud->get_post_by_meta("tracking_code", $request["tracking_code"], "=", true);
         if (!empty($data) && !empty($data["order_id"])) {
             $status = $request["order_status"];
+            $courier_tracking_code = (isset($request["courier_tracking_code"])) ? $request["courier_tracking_code"] : false;
             $args = [
                 'order_id' => $data["order_id"],
                 'shippop_status' => $status
             ];
+            if ($courier_tracking_code) {
+                $args['courier_tracking_code'] = $courier_tracking_code;
+            }
+
             $this->_crud->update_post_meta($args);
 
             if ($status == "complete") {
                 $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
                 $order = $objectManager->create('\Magento\Sales\Model\Order')->load($data["order_id"]);
                 $order->setState("complete")->setStatus("complete");
-                $order->addStatusHistoryComment(__("Update status from SHIPPOP's WebHooks", "shippop-ecommerce") . " [STATUS : $status]");
+                $order->addStatusHistoryComment("Update status from SHIPPOP's WebHooks" . " [STATUS : $status]");
                 $order->save();
             }
 
@@ -358,21 +386,24 @@ class Utility extends AbstractHelper
      *
      * @return array
      */
-    public function authShippop($shippop_email, $shippop_password, $shippop_server)
+    public function authShippop($shippop_email, $shippop_password, $shippop_server, $shippop_testing_mode)
     {
-        // $key = "tdiG06240HFAwCFOrVRxzbzuRCgMmpx1";
-        // $iv = "UJrkONI192qEmaBk";
-
-        /* PRD */
-        $key = "Jfkd0i20r0eif32dFis94dsafb920DKa";
-        $iv = "djowr1Aj234fd0aD";
+        if ( $shippop_testing_mode ) {
+            /* TST */
+            $key = "tdiG06240HFAwCFOrVRxzbzuRCgMmpx1";
+            $iv = "UJrkONI192qEmaBk";
+        } else {
+            /* PRD */
+            $key = "Jfkd0i20r0eif32dFis94dsafb920DKa";
+            $iv = "djowr1Aj234fd0aD";
+        }
 
         $sign = $this->specm_encode(json_encode(['email' => $shippop_email, 'password' => $shippop_password]), $key, $iv);
         $response = $this->ShippopAPI->authBearer([
             'clientName' => 'SHIPPOP_WP',
             'clientType' => 'POSTPAID',
             'sign' => $sign
-        ], $shippop_server);
+        ], $shippop_server , $shippop_testing_mode );
 
         return $response;
     }
@@ -414,6 +445,7 @@ class Utility extends AbstractHelper
     {
         $Pyadc = $this->ShippopAPI->prepareAddress($address, []);
         $response = ['status' => false];
+        $Pyadc = $response['data'] = $Pyadc['address'];
         if ($Pyadc["status"] == 1) {
             $response['status'] = true;
             $response['type'] = "1";
@@ -423,7 +455,8 @@ class Utility extends AbstractHelper
             $response['type'] = "2";
             $response["suggestion"] = $this->prepare_address_corrector($Pyadc["data"]);
         } else {
-            $response['message'] = __("Incorrect address");
+            $msg = ( !empty($response["message"]) ) ? $response["message"] : '-';
+            $response['message'] = __("Incorrect address") . " [ " . $msg . " ] ";
         }
         return $response;
     }
@@ -454,7 +487,8 @@ class Utility extends AbstractHelper
         $prefix_province = "จังหวัด";
         $prefix_zipcode = "รหัสไปรษณีย์";
         foreach ($data as $key => $value) {
-            $args[$key]['full'] = $value["cleaned_address"] . ' ' . $value["subdistrict"]["replacer"] . ' ' . $value["district"]["replacer"] . ' ' . $value["province"]["replacer"] . ' ' . $value["zipcode"]["replacer"];
+            $_address = ( empty($value["cleaned_address"]) ) ? "" : $value["cleaned_address"];
+            $args[$key]['full'] = $_address . ' ' . $value["subdistrict"]["replacer"] . ' ' . $value["district"]["replacer"] . ' ' . $value["province"]["replacer"] . ' ' . $value["zipcode"]["replacer"];
             $args[$key]['state'] = $value["subdistrict"]["replacer"];
             $args[$key]['district'] = $value["district"]["replacer"];
             $args[$key]['province'] = $value["province"]["replacer"];
@@ -559,18 +593,18 @@ class Utility extends AbstractHelper
         if ($to["state"] == "") {
             $to["state"] = (!empty($shippingAddress['city'])) ? $shippingAddress['city'] : "-";
         }
-        $shippop_server = $this->config->getShippopConfig("auth", "shippop_server");
-        if (strtoupper($shippop_server) === "TH") {
-            $address_corrector = $this->addressCorrector($shippingAddress['street']);
-            if ($address_corrector["status"] === false) {
-                return ["status" => false, "message" => __("Incorrect address")];
-            } elseif ($address_corrector["type"] == "1") {
-                $to["province"] = $address_corrector["suggestion"][0]["province"];
-                $to["state"] = $address_corrector["suggestion"][0]["state"];
-                $to["district"] = $address_corrector["suggestion"][0]["district"];
-                $to["postcode"] = $address_corrector["suggestion"][0]["postcode"];
-            }
-        }
+        // $shippop_server = $this->config->getShippopConfig("auth", "shippop_server");
+        // if (strtoupper($shippop_server) === "TH") {
+        //     $address_corrector = $this->addressCorrector($shippingAddress['street']);
+        //     if ($address_corrector["status"] === false) {
+        //         return ["status" => false, "message" => __("Incorrect address")];
+        //     } elseif ($address_corrector["type"] == "1") {
+        //         $to["province"] = $address_corrector["suggestion"][0]["province"];
+        //         $to["state"] = $address_corrector["suggestion"][0]["state"];
+        //         $to["district"] = $address_corrector["suggestion"][0]["district"];
+        //         $to["postcode"] = $address_corrector["suggestion"][0]["postcode"];
+        //     }
+        // }
 
         $products = [];
         if ($get_products) {
@@ -695,7 +729,7 @@ class Utility extends AbstractHelper
                 if (!empty($parcel_logo[$courier_code])) {
                     $logo = $parcel_logo[$courier_code];
                 } else {
-                    $logo = $parcel_logo["SHP"];
+                    $logo = $parcel_logo["SPE"];
                 }
                 $new_courier[$courier_code]["logo"] = $this->_assetRepo->getUrl("Shippop_Ecommerce::images/" . $logo);
                 $new_courier[$courier_code]["pick_up_mode"] = "";
@@ -705,6 +739,8 @@ class Utility extends AbstractHelper
                 if (in_array($courier_code, $parcel_delivery["pick_up"])) {
                     $new_courier[$courier_code]["pick_up_mode"] .= __("Pick-up service");
                 }
+
+                $new_courier[$courier_code]["remark"] = $this->translate_error_code($new_courier[$courier_code]["remark"]);
             }
         }
 
@@ -783,7 +819,8 @@ class Utility extends AbstractHelper
             'number' => $tracking_number
         ];
 
-        $shipment->getOrder()->setIsInProcess(false);
+        $shipment->getOrder()->setIsInProcess(true);
+        // $shipment->getOrder()->setIsInProcess(false);
 
         try {
             $track = $this->_objectManager->create('Magento\Sales\Model\Order\Shipment\TrackFactory')->create()->addData($data);
@@ -818,6 +855,30 @@ class Utility extends AbstractHelper
         } catch (\Exception $e) {
             return false;
         }
+    }
+
+    /**
+     * @param string $msg
+     *
+     * @return string
+     */
+    private function translate_error_code($msg = "")
+    {
+        $msg = strtoupper($msg);
+        if ($msg === "OPTIONAL") {
+            return "";
+        }
+        if (strpos($msg, 'MINIMUM') !== false && strpos($msg, 'ORDER') !== false) {
+            $min = trim(str_replace(["MINIMUM", "ORDER"], "", $msg));
+            $msg = __('MINIMUM %1 ORDER', $min);
+        } else {
+            $msg = __($msg);
+        }
+        // If ENG
+        if (preg_match('/[^A-Za-z0-9]+/', $msg)) {
+            return ucfirst(strtolower($msg));
+        }
+        return $msg;
     }
 
     /**

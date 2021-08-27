@@ -2,6 +2,9 @@
 
 namespace Shippop\Ecommerce\Block\Order;
 
+/**
+ * @api
+ */
 class ShippopTracking extends \Magento\Framework\View\Element\Template
 {
     protected $_template = 'sales/order/view.phtml';

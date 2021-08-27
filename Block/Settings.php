@@ -6,6 +6,9 @@ use Shippop\Ecommerce\Helper\Config;
 use Shippop\Ecommerce\Helper\ShippopApi;
 use Magento\Framework\Serialize\SerializerInterface;
 
+/**
+ * @api
+ */
 class Settings extends \Magento\Framework\View\Element\Template
 {
     protected $_assetRepo;
@@ -46,6 +49,15 @@ class Settings extends \Magento\Framework\View\Element\Template
     {
         $shippop_server = $this->config->getShippopConfig("auth", "shippop_server");
         return $shippop_server;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMode()
+    {
+        $shippop_testing_mode = $this->config->getShippopConfig("auth", "shippop_testing_mode");
+        return (empty($shippop_testing_mode) || $shippop_testing_mode == "0") ? false : true;
     }
 
     /**

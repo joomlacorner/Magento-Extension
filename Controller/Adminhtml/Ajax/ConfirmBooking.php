@@ -48,6 +48,7 @@ class ConfirmBooking extends \Magento\Backend\App\Action
                     $confirmPurchase = $this->_utility->confirmPurchase($purchase_id, $order_ids);
                     $response['confirmPurchase'] = $confirmPurchase;
                     if (!empty($confirmPurchase['status']) && $confirmPurchase['status']) {
+                        $response['trackingPurchase'] = $this->_utility->trackingPurchase($purchase_id);
                         $order_ids = explode(",", $order_ids);
                         foreach ($order_ids as $order_id) {
                             $this->_utility->specm_create_shipment_tracking(
@@ -59,8 +60,8 @@ class ConfirmBooking extends \Magento\Backend\App\Action
                         }
 
                         $response['status'] = true;
-                        $response['message'] = "<h3>" . __("Booking confirmed and Payment completed") . "</h3>";
-                        $response['message2'] = "<p>" . __("Please print waybill") . "</p>";
+                        $response['message'] = "<h3 style='text-align: center;'>" . __("Booking confirmed and Payment completed") . "</h3>";
+                        $response['message2'] = "<p style='text-align: center;'>" . __("Please print waybill") . "</p>";
                         $response['print_waybill_link'] = $this->urlBuilder->getUrl("shippop/ecommerce/courierparcel");
                     } else {
                         $response['status'] = false;

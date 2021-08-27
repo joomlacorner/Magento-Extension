@@ -1,4 +1,8 @@
-require(["jquery", "Specm_utility"], function ($, Specm_utility) {
+require([
+  "jquery",
+  "mage/translate",
+  "Specm_utility"
+], function ($, $t, Specm_utility) {
   $(document).on("click", "button.specm-register-btn", function (e) {
     $("div.specm-wrapper-register").show();
     $("div.specm-wrapper-login").hide();
@@ -13,11 +17,14 @@ require(["jquery", "Specm_utility"], function ($, Specm_utility) {
     e.preventDefault();
     var frm_elm = $(this);
 
+    $("p.notics-error").hide();
+
     var data = {
       form_key: FORM_KEY,
       shippop_email: $(frm_elm).find("input[name='shippop_email']").val(),
       shippop_password: $(frm_elm).find("input[name='shippop_password']").val(),
       shippop_server: $(frm_elm).find("select[name='shippop_server']").val(),
+      shippop_testing_mode: $(frm_elm).find("input[name='shippop_testing_mode']:checked").val(),
       shippop_method: "LOGIN",
     };
 
@@ -37,7 +44,9 @@ require(["jquery", "Specm_utility"], function ($, Specm_utility) {
         if (resp.status) {
           window.location.href = resp.redirect_url;
         } else {
-          Specm_utility.showAlert("Error", resp.message, "F", false, "close");
+          // Specm_utility.showAlert("Error", resp.message, "F", false, "close");
+          $("p.notics-error").text( resp.message );
+          $("p.notics-error").show();
         }
       })
       .fail(function (XMLHttpRequest, textStatus, errorThrown) {
@@ -75,7 +84,7 @@ require(["jquery", "Specm_utility"], function ($, Specm_utility) {
       .done(function (resp) {
         Specm_utility.hidePreload();
         if (resp.status) {
-          Specm_utility.showAlert( "Success", resp.message + resp.message2, "F", false, "reload");
+          Specm_utility.showAlert( $t("Success"), resp.message + resp.message2, "F", false, "reload");
         } else {
           Specm_utility.showAlert("Error", resp.message, "F", false, "close");
         }

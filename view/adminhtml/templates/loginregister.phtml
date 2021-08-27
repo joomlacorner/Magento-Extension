@@ -10,14 +10,15 @@ $logo = $block->shippop_logo_register();
 <div class="wrap">
     <div class="specm-wrapper-login">
         <h1 class="login-title"><?= $block->escapeHtml(__('Login to SHIPPOP')); ?></h1>
+        <p class="notics-error" style="display: none;">aaaa</p>
         <form method="post" class="specm-form-login" action="" style="padding: 0px 50px;">
             <div class="specm-frm-group">
                 <label><?= $block->escapeHtml(__('Email')); ?></label>
-                <input type="email" name="shippop_email" required>
+                <input type="email" name="shippop_email" id="shippop_email" required>
             </div>
             <div class="specm-frm-group">
                 <label><?= $block->escapeHtml(__('Password')); ?></label>
-                <input type="password" name="shippop_password" required>
+                <input type="password" name="shippop_password" id="shippop_password" required>
             </div>
             <div class="specm-frm-group">
                 <label><?= $block->escapeHtml(__('Choose country')); ?></label>
@@ -27,13 +28,13 @@ $logo = $block->shippop_logo_register();
                 </select>
             </div>
             <div class="specm-frm-group">
-                <label class="specm-checkbox-container"><?= $block->escapeHtml(__('Remember me')); ?>
-                    <input type="checkbox" name="shippop_infinity">
+                <label class="specm-checkbox-container"><?= $block->escapeHtml(__('Mode Testing')); ?>
+                    <input type="checkbox" name="shippop_testing_mode">
                     <span class="checkmark"></span>
                 </label>
             </div>
             <div class="specm-frm-group">
-                <button type="submit" name="shippop_login_submit">
+                <button type="submit" name="shippop_login_submit" id="shippop_login_submit">
                     <?= $block->escapeHtml(__('Login')); ?>
                 </button>
             </div>
@@ -65,23 +66,23 @@ $logo = $block->shippop_logo_register();
                 <input type="text" name="shippop_company">
             </div>
             <div class="specm-frm-group">
-                <label><?= $block->escapeHtml(__('Name and Surname')); ?></label>
+                <label><?= $block->escapeHtml(__('Name and Surname')); ?><span class="register-red-star">*</span></label>
                 <input type="text" name="shippop_name" required />
             </div>
             <div class="specm-frm-group">
-                <label><?= $block->escapeHtml(__('Telephone number')); ?></label>
+                <label><?= $block->escapeHtml(__('Telephone number')); ?><span class="register-red-star">*</span></label>
                 <input type="text" name="shippop_tel" pattern="[0-9]{10}" required />
             </div>
             <div class="specm-frm-group">
-                <label><?= $block->escapeHtml(__('Email')); ?></label>
+                <label><?= $block->escapeHtml(__('Email')); ?><span class="register-red-star">*</span></label>
                 <input type="email" name="shippop_email" required />
             </div>
             <div class="specm-frm-group">
-                <label><?= $block->escapeHtml(__('Interested courier services')); ?></label>
-                <input type="text" name="shippop_courier" placeholder="Flash Express , Kerry Express , Ems" />
+                <label><?= $block->escapeHtml(__('Interested courier services')); ?><span class="register-red-star">*</span></label>
+                <input type="text" name="shippop_courier" placeholder="Flash Express , Kerry Express , Ems" required />
             </div>
             <div class="specm-frm-group">
-                <label><?= $block->escapeHtml(__('Choose country')); ?></label>
+                <label><?= $block->escapeHtml(__('Choose country')); ?><span class="register-red-star">*</span></label>
                 <select name="shippop_server" required>
                     <option value="TH"><?= $block->escapeHtml(__('Thailand')); ?></option>
                     <option value="MY"><?= $block->escapeHtml(__('Malaysia')); ?></option>

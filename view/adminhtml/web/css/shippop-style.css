@@ -5,7 +5,7 @@
   background-repeat: no-repeat;
 }
 
-.modal-title {
+.specm-modal > .modal-title {
   padding: 5px 15px;
   border-bottom: solid 1px #ccc;
   font-size: 16px;
@@ -118,18 +118,41 @@ button.specm-get-list-choose-courier:hover, button.specm-get-list-choose-courier
   color: white !important;
 }
 
-aside.specm-modal div.modal-inner-wrap header.modal-header h1.modal-title {
-  /* margin: 0px !important; */
-  display: none;
-}
-
-aside.specm-modal div.modal-inner-wrap div.modal-content {
-  padding-right: 3rem !important;
-  text-align: center;
+aside.specm-modal div.modal-inner-wrap header.modal-header h1.modal-title,
+h1.specm-second-title {
+  font-weight: bold;
+  font-size: 19px;
 }
 
 button.action-link {
   background-color: #0273aa !important;
   border: #0273aa !important;
   color: white !important;
+  height: 45px !important;
+}
+
+aside.specm-modal div.modal-inner-wrap header.modal-header {
+  padding-top: 1.5rem !important;
+  border-bottom: solid 2px #ccc;
+  margin-bottom: 10px;
+}
+
+aside.specm-modal  div.modal-inner-wrap header.modal-header button.action-close {
+  padding: 1.5rem !important;
+}
+
+aside.specm-modal.confirm div.modal-inner-wrap footer.modal-footer {
+  text-align: center;
+}
+
+aside.specm-modal div.modal-inner-wrap footer.modal-footer {
+  padding: 10px !important;
+}
+
+#menu-shippop-ecommerce-main-menu div.submenu ul li.item-choose-courier,
+#menu-shippop-ecommerce-main-menu div.submenu ul li.item-courier-parcel,
+#menu-shippop-ecommerce-main-menu div.submenu ul li.item-report-cod,
+#menu-shippop-ecommerce-main-menu div.submenu ul li.item-settings,
+#menu-shippop-ecommerce-main-menu div.submenu ul li.item-login-register {
+    display: none;   
 }

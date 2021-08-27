@@ -20,3 +20,4 @@ We recommend `composer` to install this package. However, if you want a manual c
 * Run `php -f bin/magento setup:upgrade`
 * Flush the Magento cache
 * Done
+###

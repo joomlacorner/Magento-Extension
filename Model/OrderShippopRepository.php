@@ -104,9 +104,9 @@ class OrderShippopRepository implements OrderShippopRepositoryInterface
             /** @var \[Vendor]\[Module]\Api\Data\DataInterface|\Magento\Framework\Model\AbstractModel $data */
             $data = $this->_dataInterfaceFactory->create();
             $this->_resource->load($data, $dataId);
-            if (!$data->getId()) {
-                throw new NoSuchEntityException(__('Requested data doesn\'t exist'));
-            }
+            // if (!$data->getId()) {
+            //     throw new NoSuchEntityException(__('Requested data doesn\'t exist'));
+            // }
             $this->_instances[$dataId] = $data;
         }
         return $this->_instances[$dataId];

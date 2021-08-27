@@ -12,6 +12,7 @@ class View extends \Magento\Backend\Block\Template implements \Magento\Backend\B
     protected $_crud;
     protected $config;
     protected $_serializerInterface;
+    protected $_coreRegistry;
 
     public function __construct(
         \Magento\Backend\Block\Template\Context $context,
@@ -20,6 +21,7 @@ class View extends \Magento\Backend\Block\Template implements \Magento\Backend\B
         \Magento\Framework\UrlInterface $urlBuilder,
         \Shippop\Ecommerce\Helper\Crud $crud,
         \Shippop\Ecommerce\Helper\Config $config,
+        \Magento\Framework\Registry $registry,
         SerializerInterface $serializerInterface,
         array $data = []
     ) {
@@ -29,15 +31,17 @@ class View extends \Magento\Backend\Block\Template implements \Magento\Backend\B
         $this->_crud = $crud;
         $this->config = $config;
         $this->_serializerInterface = $serializerInterface;
+        $this->_coreRegistry = $registry;
         parent::__construct($context, $data);
     }
-    
+
     /**
      * @return object
      */
     public function getOrder()
     {
-        $order = $this->_checkoutSession->getLastRealOrder();
+        // $order = $this->_checkoutSession->getLastRealOrder();
+        $order = $this->_coreRegistry->registry('current_order');
         return $order;
     }
 
@@ -46,7 +50,8 @@ class View extends \Magento\Backend\Block\Template implements \Magento\Backend\B
      */
     public function getOrderId()
     {
-        return $this->getRequest()->getParam('order_id');
+        // return $this->getRequest()->getParam('order_id');
+        return $this->getOrder()->getEntityId();
     }
 
     /**

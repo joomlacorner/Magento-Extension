@@ -47,7 +47,7 @@ class ChooseCourierFilterTable
             }
 
             if ($result instanceof $this->collection) {
-                $select = $this->collection->getSelect()->group('entity_id');
+                $select = $this->collection->getSelect()->group('main_table.entity_id');
                 $select->join(
                     [$sales_order_shippop],
                     $where_join,

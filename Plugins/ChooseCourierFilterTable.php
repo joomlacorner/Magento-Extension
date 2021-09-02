@@ -47,7 +47,7 @@ class ChooseCourierFilterTable
             }
 
             if ($result instanceof $this->collection) {
-                $select = $this->collection->getSelect();
+                $select = $this->collection->getSelect()->group('entity_id');
                 $select->join(
                     [$sales_order_shippop],
                     $where_join,
@@ -60,6 +60,11 @@ class ChooseCourierFilterTable
                         $sales_order_shippop . '.courier_code'
                     ]
                 )->distinct();
+
+                // $writer = new \Laminas\Log\Writer\Stream(BP . '/var/log/test.log');
+                // $logger = new \Laminas\Log\Logger();
+                // $logger->addWriter($writer);
+                // $logger->info( $this->collection->getSelect()->__toString() );
             }
             return $this->collection;
         }

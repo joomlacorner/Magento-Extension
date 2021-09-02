@@ -20,7 +20,7 @@ $tracking_code = $block->getTrackingCode();
                 <div class="admin__field">
                     <label for="_order_total_weight" class="admin__field-label"><?= $block->escapeHtml(__('Weight (kg)')); ?></label>
                     <div class="admin__field-control">
-                        <input type="number" min="1" step="0.1" class="admin__control-text" id="_order_total_weight" name="_order_total_weight" value="<?= $block->escapeHtmlAttr($weight) ?>" required>
+                        <input type="number" min="0.1" step="0.1" class="admin__control-text" id="_order_total_weight" name="_order_total_weight" value="<?= $block->escapeHtmlAttr($weight) ?>" required>
                     </div>
                 </div>
                 <div class="admin__field">

@@ -11,8 +11,6 @@ require([
     }
  }, 100); // check every 100ms
 
-
-
   $(document).on(
     "change",
     "select[name='select_print_label']",

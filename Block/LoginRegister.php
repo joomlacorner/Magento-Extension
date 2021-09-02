@@ -22,6 +22,6 @@ class LoginRegister extends \Magento\Framework\View\Element\Template
      */
     public function shippop_logo_register()
     {
-        return $this->_assetRepo->getUrl("Shippop_Ecommerce::images/logistic_logo/SPE.png");
+        return $this->_assetRepo->getUrl("Shippop_Ecommerce::images/logistic_logo/_SPE.png");
     }
 }

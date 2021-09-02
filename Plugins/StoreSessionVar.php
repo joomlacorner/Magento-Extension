@@ -33,6 +33,7 @@ class StoreSessionVar
             "CJLX" => "logistic_logo/CJLX.png",
             "CJL" => "logistic_logo/CJLX.png",
             "FLE" => "logistic_logo/FLE.png",
+            "FLES" => "logistic_logo/FLE.png",
             "JNTP" => "logistic_logo/JNTP.png",
             "JNTPF" => "logistic_logo/JNTP.png",
             "JNTD" => "logistic_logo/JNTP.png",
@@ -42,18 +43,26 @@ class StoreSessionVar
             "NJV" => "logistic_logo/NJV.png",
             "NJVE" => "logistic_logo/NJV.png",
             "SCG" => "logistic_logo/SCG.png",
+            "SCGX" => "logistic_logo/SCG.png",
             "SCGC" => "logistic_logo/SCGC.png",
             "SCGF" => "logistic_logo/SCGC.png",
             "SEN" => "logistic_logo/SEN.png",
+            "EMST" => "logistic_logo/THP.png",
             "THP" => "logistic_logo/THP.png",
             "TP2" => "logistic_logo/TP2.png",
+            "ECP" => "logistic_logo/ECP.png",
             "SKT" => "logistic_logo/SKT.png",
             "KRY" => "logistic_logo/KRY.png",
             "KRYP" => "logistic_logo/KRY.png",
             "KRYD" => "logistic_logo/KRY.png",
             "BEST" => "logistic_logo/BEST.png",
             "TRUE" => "logistic_logo/TRUE.png",
-            "SPE" => "logistic_logo/SPE.png",
+            "MSE" => "logistic_logo/MSE.png",
+            "MSEC" => "logistic_logo/MSEC.png",
+            "SPE" => "logistic_logo/MSE.png",
+            "SPEC" => "logistic_logo/MSEC.png",
+            "ZTO" => "logistic_logo/ZTO.png",
+            "TPSD" => "logistic_logo/TPSD.png",
 
             "ZPT" => "logistic_logo/ZPT.png",
             "ZPTE" => "logistic_logo/ZPT.png",
@@ -63,7 +72,7 @@ class StoreSessionVar
             "DHL" => "logistic_logo/DHL.png",
             "NTW" => "logistic_logo/NTW.jpg",
 
-            "SPE" => "logistic_logo/SPE.png"
+            "_SPE" => "logistic_logo/SPE.png"
         ]);
 
         $this->_coreSession->setOnDemand(["LLM", "SKT"]);
@@ -89,7 +98,8 @@ class StoreSessionVar
             "letter" => __("Letter"),
             "letter4x6" => __("Size 4x6"),
             "sticker" => __("Sticker size 8x8 cm"),
-            "sticker4x6" => __("Sticker size 4x6 in")
+            "sticker4x6" => __("Sticker size 4x6 in"),
+            "sticker4x6_product" => __("Sticker size 4x6 in with products")
         ]);
     }
 }

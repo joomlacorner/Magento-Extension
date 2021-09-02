@@ -32,7 +32,9 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
                    'shippop_status',
                    \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
                    50,
-                   [],
+                   [
+                    'nullable' => false, 'default' => 'wait'
+                   ],
                    'SHIPPOP Status'
                )
                ->addColumn(

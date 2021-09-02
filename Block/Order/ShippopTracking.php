@@ -62,8 +62,14 @@ class ShippopTracking extends \Magento\Framework\View\Element\Template
     public function getTrackingLocation()
     {
         $shippop_server = $this->config->getShippopConfig("auth", "shippop_server");
+        $shippop_testing_mode = $this->config->getShippopConfig("auth", "shippop_testing_mode");
+        if ( $shippop_testing_mode == "1" ) {
+            $domain = ".dev";
+        } else {
+            $domain = ".com";
+        }
         if (strtoupper($shippop_server) === "TH") {
-            return "https://www.shippop.com/tracking/?tracking_code=";
+            return "https://www.shippop". $domain ."/tracking/?tracking_code=";
         } else {
             return "https://www.shippop.my/tracking/?tracking_code=";
         }

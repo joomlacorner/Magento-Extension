@@ -147,6 +147,7 @@ class Utility extends AbstractHelper
                 $courier_list = [];
             }
             $purchase_id = (empty($result["purchase_id"])) ? 0 : $result["purchase_id"];
+            $shippop_testing_mode = $this->config->getShippopConfig("auth", "shippop_testing_mode");
             foreach ($order_ids as $key => $order_id) {
                 if (empty($result["data"][$key])) {
                     continue;
@@ -164,7 +165,7 @@ class Utility extends AbstractHelper
                 $content_data['tracking_code'] = $data["tracking_code"];
                 $content_data['courier_tracking_code'] = $data["courier_tracking_code"];
                 $content_data['extra'] = ['price' => $data["price"], 'status' => $data["status"], 'booking_data' => $bookings_data[$order_id]];
-                $content_data['environment_sandbox'] = 0;
+                $content_data['environment_sandbox'] = ( $shippop_testing_mode == "1" ) ? 1 : 0;
                 $this->_crud->update_post_meta($content_data);
                 $result['content_data'][$order_id] = $content_data;
             }
@@ -542,7 +543,7 @@ class Utility extends AbstractHelper
         if (!empty($parcel_logo[$TrackingHistory["courier_code"]])) {
             $logo = $parcel_logo[$TrackingHistory["courier_code"]];
         } else {
-            $logo = $parcel_logo["SHP"];
+            $logo = $parcel_logo["_SPE"];
         }
 
         $TrackingHistory["shippop_status"] = $shippop_status[$TrackingHistory["order_status"]];
@@ -729,8 +730,10 @@ class Utility extends AbstractHelper
                 if (!empty($parcel_logo[$courier_code])) {
                     $logo = $parcel_logo[$courier_code];
                 } else {
-                    $logo = $parcel_logo["SPE"];
+                    $logo = $parcel_logo["_SPE"];
                 }
+                $new_courier[$courier_code]["courier_name"] = ( $courier_code == "EMST" ) ? "EMS" : $new_courier[$courier_code]["courier_name"];
+
                 $new_courier[$courier_code]["logo"] = $this->_assetRepo->getUrl("Shippop_Ecommerce::images/" . $logo);
                 $new_courier[$courier_code]["pick_up_mode"] = "";
                 if (in_array($courier_code, $parcel_delivery["drop_off"])) {

@@ -207,6 +207,11 @@ class ShippopApi extends AbstractHelper
             'size' => $size,
             'type' => $type
         ];
+        if ( $size == 'sticker4x6_product' ) {
+            $postData['size'] = 'sticker4x6';
+            $postData['showproduct'] = 1;
+        }
+
         return $this->post("label_tracking_code", $postData);
     }
 

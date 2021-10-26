@@ -579,8 +579,8 @@ class Utility extends AbstractHelper
 
         $this->prepareStreet($shippingAddress['street']);
         $to = [
-            'province' => (!empty($shippingAddress['province'])) ? $shippingAddress['province'] : "",
-            'state' => "",
+            'province' => (!empty($shippingAddress['province'])) ? $shippingAddress['province'] : "-",
+            'state' => "-",
             'district' => (!empty($shippingAddress['city'])) ? $shippingAddress['city'] : "-",
             'postcode' => $shippingAddress['postcode'],
             'address' => $shippingAddress['street'],
@@ -588,11 +588,17 @@ class Utility extends AbstractHelper
             'tel' => $shippingAddress['telephone'],
             'email' => $shippingAddress['email'],
         ];
-        if ($to["province"] == "") {
-            $to["province"] = (!empty($shippingAddress['region'])) ? $shippingAddress['region'] : "-";
+        // if ($to["province"] == "") {
+        //     $to["province"] = (!empty($shippingAddress['region'])) ? $shippingAddress['region'] : "-";
+        // }
+        if ((!empty($shippingAddress['subdistrict']))) {
+            $to["district"] = (!empty($shippingAddress['subdistrict'])) ? $shippingAddress['subdistrict'] : "-";
         }
-        if ($to["state"] == "") {
+        if ((!empty($shippingAddress['city']))) {
             $to["state"] = (!empty($shippingAddress['city'])) ? $shippingAddress['city'] : "-";
+        }
+        if ((!empty($shippingAddress['region']))) {
+            $to["province"] = (!empty($shippingAddress['region'])) ? $shippingAddress['region'] : "-";
         }
         // $shippop_server = $this->config->getShippopConfig("auth", "shippop_server");
         // if (strtoupper($shippop_server) === "TH") {

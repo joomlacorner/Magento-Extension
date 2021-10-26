@@ -51,12 +51,12 @@ class ConfirmBooking extends \Magento\Backend\App\Action
                         $response['trackingPurchase'] = $this->_utility->trackingPurchase($purchase_id);
                         $order_ids = explode(",", $order_ids);
                         foreach ($order_ids as $order_id) {
-                            $this->_utility->specm_create_shipment_tracking(
-                                $order_id,
-                                $bookingOrder["content_data"][$order_id]["courier_code"],
-                                $bookingOrder["content_data"][$order_id]["courier"],
-                                $bookingOrder["content_data"][$order_id]["tracking_code"]
-                            );
+                            // $this->_utility->specm_create_shipment_tracking(
+                            //     $order_id,
+                            //     $bookingOrder["content_data"][$order_id]["courier_code"],
+                            //     $bookingOrder["content_data"][$order_id]["courier"],
+                            //     $bookingOrder["content_data"][$order_id]["tracking_code"]
+                            // );
                         }
 
                         $response['status'] = true;

@@ -488,7 +488,8 @@ class Utility extends AbstractHelper
         $prefix_province = "จังหวัด";
         $prefix_zipcode = "รหัสไปรษณีย์";
         foreach ($data as $key => $value) {
-            $_address = ( empty($value["cleaned_address"]) ) ? "" : $value["cleaned_address"];
+            // $_address = ( empty($value["cleaned_address"]) ) ? "" : $value["cleaned_address"];
+            $_address = ( empty($value["address"]) ) ? "" : $value["address"];
             $args[$key]['full'] = $_address . ' ' . $value["subdistrict"]["replacer"] . ' ' . $value["district"]["replacer"] . ' ' . $value["province"]["replacer"] . ' ' . $value["zipcode"]["replacer"];
             $args[$key]['state'] = $value["subdistrict"]["replacer"];
             $args[$key]['district'] = $value["district"]["replacer"];

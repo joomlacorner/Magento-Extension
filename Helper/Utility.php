@@ -360,10 +360,18 @@ class Utility extends AbstractHelper
 
             $this->_crud->update_post_meta($args);
 
-            if ($status == "complete") {
+            if ($status == "complete" || $status == "shipping") {
                 $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
                 $order = $objectManager->create('\Magento\Sales\Model\Order')->load($data["order_id"]);
-                $order->setState("complete")->setStatus("complete");
+                if ($status == "shipping") {
+                        $this->specm_create_shipment_tracking(
+                            $data["order_id"],
+                                 'Shippop',
+                                 'ShipPop',
+                                 $data['tracking_code']
+                              );
+                }
+                // $order->setState("complete")->setStatus("complete");    // Krit
                 $order->addStatusHistoryComment("Update status from SHIPPOP's WebHooks" . " [STATUS : $status]");
                 $order->save();
             }
